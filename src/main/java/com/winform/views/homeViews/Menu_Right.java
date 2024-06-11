@@ -7,12 +7,14 @@ package com.winform.views.homeViews;
 import com.winform.customComponent.PanelRound;
 import com.winform.customComponent.UserItem;
 import javax.swing.JPanel;
+import lombok.Data;
 import net.miginfocom.swing.MigLayout;
 
 /**
  *
  * @author agin0
  */
+@Data
 public class Menu_Right extends JPanel {
 
     /**
