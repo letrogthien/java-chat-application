@@ -1,0 +1,60 @@
+package com.winform.views.homeViews;
+
+import java.awt.Color;
+
+public class Chat_Left_With_Profile extends javax.swing.JLayeredPane {
+
+    public Chat_Left_With_Profile() {
+        initComponents();
+        txt.setBackground(new Color(242, 242, 242));
+    }
+ public void setUserProfile(String user) {
+        txt.setUserProfile(user);
+    }
+  
+    public void setText(String text) {
+        txt.setText(text);
+        txt.setTime("10:30 PM");    //  Testing
+
+     }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        imageAvatar1 = new com.winform.swing.ImageAvatar();
+        txt = new com.winform.views.homeViews.Chat_Item();
+        imageAvatar2 = new com.winform.swing.ImageAvatar();
+
+        imageAvatar2.setBorderSize(0);
+        imageAvatar2.setImage(new javax.swing.ImageIcon(getClass().getResource("/icon/testing/dog.jpg"))); // NOI18N
+        imageAvatar2.setPreferredSize(new java.awt.Dimension(31, 31));
+
+        setLayer(txt, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        setLayer(imageAvatar2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(imageAvatar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(imageAvatar2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 73, Short.MAX_VALUE))
+            .addComponent(txt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.winform.swing.ImageAvatar imageAvatar1;
+    private com.winform.swing.ImageAvatar imageAvatar2;
+    private com.winform.views.homeViews.Chat_Item txt;
+    // End of variables declaration//GEN-END:variables
+}

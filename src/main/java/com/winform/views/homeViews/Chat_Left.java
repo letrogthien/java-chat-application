@@ -9,10 +9,12 @@ public class Chat_Left extends javax.swing.JLayeredPane {
         txt.setBackground(new Color(242, 242, 242));
     }
 
+  
     public void setText(String text) {
         txt.setText(text);
-      
-    }
+        txt.setTime("10:30 PM");    //  Testing
+
+     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

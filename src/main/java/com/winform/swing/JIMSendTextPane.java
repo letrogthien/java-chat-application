@@ -16,6 +16,10 @@ import javax.swing.text.ViewFactory;
 
 public class JIMSendTextPane extends JTextPane {
 
+    public void setUserProfile(String user) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     private class WarpEditorKit extends StyledEditorKit {
 
         private ViewFactory defaultFactory = new WarpColumnFactory();
