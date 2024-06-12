@@ -4,6 +4,8 @@ com\winform\customComponent\CustomDialog.class
 com\winform\services\AuthService.class
 com\winform\views\homeViews\Chat_Item.class
 com\winform\views\authViews\ParentLogin.class
+com\winform\views\homeViews\Chat_Image.class
+com\winform\swing\PictureBox.class
 com\winform\customComponent\PanelRound.class
 com\winform\views\homeViews\Chat_Left.class
 com\winform\views\authViews\LoginForm.class

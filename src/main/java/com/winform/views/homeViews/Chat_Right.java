@@ -1,6 +1,7 @@
 package com.winform.views.homeViews;
 
 import java.awt.Color;
+import javax.swing.Icon;
 
 public class Chat_Right extends javax.swing.JLayeredPane {
 
@@ -10,7 +11,20 @@ public class Chat_Right extends javax.swing.JLayeredPane {
     }
 
     public void setText(String text) {
-        txt.setText(text);
+        if (text.equals("")) {
+            txt.hideText();
+        } else {
+            txt.setText(text);
+        }
+        txt.seen();
+    }
+
+    public void setImage(Icon... image) {
+        txt.setImage(true, image);
+    }
+
+    public void setTime() {
+        txt.setTime("10:30 PM");    //  Testing
     }
 
     @SuppressWarnings("unchecked")
