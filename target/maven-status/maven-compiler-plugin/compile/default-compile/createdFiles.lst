@@ -1,12 +1,14 @@
 com\winform\swing\JIMSendTextPane.class
 com\winform\views\authViews\RegisterForm$4.class
 com\winform\customComponent\CustomDialog.class
+com\winform\views\Main$2.class
 com\winform\services\AuthService.class
 com\winform\views\homeViews\Chat_Item.class
 com\winform\views\authViews\ParentLogin.class
 com\winform\views\homeViews\Chat_Image.class
 com\winform\swing\PictureBox.class
 com\winform\customComponent\PanelRound.class
+com\winform\views\homeViews\View_image$2.class
 com\winform\views\homeViews\Chat_Left.class
 com\winform\views\authViews\LoginForm.class
 com\winform\swing\ModernScrollBarUI$1.class
@@ -17,7 +19,9 @@ com\winform\views\homeViews\Chat.class
 com\winform\views\homeViews\Chat_Left_With_Profile.class
 com\winform\swing\ImageAvatar.class
 com\winform\views\authViews\ForgotPass.class
+com\winform\event\PublicEvent.class
 com\winform\models\StatusType.class
+com\winform\views\homeViews\View_image.class
 com\winform\views\authViews\RegisterForm$1.class
 com\winform\views\homeViews\Chat_Bottom.class
 com\winform\swing\JIMSendTextPane$1.class
@@ -33,6 +37,7 @@ com\winform\customComponent\ImageRound.class
 com\winform\swing\JIMSendTextPane$WarpColumnFactory.class
 com\winform\views\authViews\ForgotPass$1.class
 com\winform\swing\JIMSendTextPane$WarpLabelView.class
+com\winform\views\homeViews\View_image$1.class
 com\winform\views\authViews\RegisterForm$3.class
 com\winform\customComponent\ButtonIcon.class
 com\winform\App$1.class
@@ -42,8 +47,10 @@ com\winform\swing\ModernScrollBarUI.class
 com\winform\swing\Line.class
 com\winform\views\homeViews\Menu_Left.class
 com\winform\config\db\Data.class
+com\winform\views\homeViews\Chat_Image$1.class
 com\winform\views\homeViews\Chat_Right.class
 com\winform\models\User.class
+com\winform\event\EventImageView.class
 com\winform\swing\JIMSendTextPane$WarpEditorKit.class
 com\winform\views\homeViews\Chat_Date.class
 com\winform\swing\ScrollBar.class

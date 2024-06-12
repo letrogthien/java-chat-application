@@ -9,7 +9,9 @@ D:\javastore\java-chat-application\src\main\java\com\winform\views\authViews\Par
 D:\javastore\java-chat-application\src\main\java\com\winform\App.java
 D:\javastore\java-chat-application\src\main\java\com\winform\views\homeViews\Home.java
 D:\javastore\java-chat-application\src\main\java\com\winform\config\db\Data.java
+D:\javastore\java-chat-application\src\main\java\com\winform\views\homeViews\View_image.java
 D:\javastore\java-chat-application\src\main\java\com\winform\views\homeViews\Chat.java
+D:\javastore\java-chat-application\src\main\java\com\winform\event\PublicEvent.java
 D:\javastore\java-chat-application\src\main\java\com\winform\swing\PictureBox.java
 D:\javastore\java-chat-application\src\main\java\com\winform\views\homeViews\Chat_Left_With_Profile.java
 D:\javastore\java-chat-application\src\main\java\com\winform\views\homeViews\Chat_Bottom.java
@@ -19,6 +21,7 @@ D:\javastore\java-chat-application\src\main\java\com\winform\views\homeViews\Men
 D:\javastore\java-chat-application\src\main\java\com\winform\models\Message.java
 D:\javastore\java-chat-application\src\main\java\com\winform\swing\Line.java
 D:\javastore\java-chat-application\src\main\java\com\winform\views\Main.java
+D:\javastore\java-chat-application\src\main\java\com\winform\event\EventImageView.java
 D:\javastore\java-chat-application\src\main\java\com\winform\customComponent\UserItem.java
 D:\javastore\java-chat-application\src\main\java\com\winform\views\homeViews\Menu_Right.java
 D:\javastore\java-chat-application\src\main\java\com\winform\customComponent\CustomDialog.java
