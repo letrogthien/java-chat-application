@@ -4,6 +4,7 @@
  */
 package com.winform.views.homeViews;
 
+import com.winform.customComponent.Image_Item;
 import com.winform.event.PublicEvent;
 import com.winform.swing.PictureBox;
 import java.awt.Component;
@@ -28,6 +29,16 @@ public class Chat_Image extends javax.swing.JLayeredPane {
             pic.setPreferredSize(getAutoSize(image, 200, 200));
             pic.setImage(image);
             addEvent(pic, image);
+            add(pic, "wrap");
+        }
+    }
+    
+    public void addImage(String... images) {
+        for (String image : images) {
+            Image_Item pic = new Image_Item();
+            pic.setPreferredSize(new Dimension(200, 200));  //  for test update next
+            pic.setImage(image);
+            //  addEvent(pic, image);
             add(pic, "wrap");
         }
     }
