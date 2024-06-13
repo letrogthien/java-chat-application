@@ -36,10 +36,10 @@ public class HomeController {
     private void initController() {
 
         updateUserList();
-        main.getHome().getMenu_Right1().setUserSelectionListener(user -> updateChatView(user));
+      // main.getHome().getMenu_Right1().setUserSelectionListener(user -> updateChatView(user));
     }
 
-    private void updateChatView(User user) {
+ /* private void updateChatView(User user) {
         main.getHome().getChat1().getChat_Body1().removeAll();
         // Cập nhật tiêu đề chat với tên và trạng thái của người dùng được chọn
         main.getHome().getChat1().getChat_Body1().addItemRight(user.getUserName());
@@ -48,7 +48,7 @@ public class HomeController {
 
         // Cập nhật nội dung chat...
         // Bạn có thể cần thêm phương thức ở chat body để hiển thị tin nhắn từ/người dùng được chọn
-    }
+    }*/
 
     public void updateUserList() {
         List<User> users = userService.getListUser();
