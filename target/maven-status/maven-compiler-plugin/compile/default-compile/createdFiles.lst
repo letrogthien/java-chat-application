@@ -19,6 +19,7 @@ com\winform\views\authViews\RegisterForm$1.class
 com\winform\views\homeViews\Chat_Bottom.class
 com\winform\swing\ProgressCircleUI.class
 com\winform\views\homeViews\Home.class
+com\winform\services\UserService.class
 com\winform\config\db\ConnectionHandler.class
 com\winform\customComponent\Image_Item.class
 com\winform\swing\blurHash\SRGB.class
@@ -35,9 +36,11 @@ com\winform\swing\Progress$ProgressType.class
 com\winform\services\AuthService.class
 com\winform\swing\blurHash\Base83.class
 com\winform\views\homeViews\Chat_Image.class
+com\winform\eventListener\ChatEvent.class
 com\winform\customComponent\PanelRound.class
 com\winform\swing\blurHash\Util.class
 com\winform\swing\ModernScrollBarUI$1.class
+com\winform\controllers\HomeController.class
 com\winform\models\UserStatus.class
 com\winform\swing\ImageAvatar.class
 com\winform\models\StatusType.class
@@ -45,6 +48,7 @@ com\winform\swing\JIMSendTextPane$1.class
 com\winform\swing\ComponentResizer.class
 com\winform\config\session\SessionManager.class
 com\winform\views\authViews\RegisterForm$2.class
+com\winform\views\homeViews\Menu_Right$1.class
 com\winform\views\homeViews\Menu_Right.class
 com\winform\customComponent\UserItem.class
 com\winform\views\homeViews\Chat_Body.class

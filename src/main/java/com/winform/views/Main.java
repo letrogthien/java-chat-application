@@ -18,11 +18,13 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import lombok.Data;
 
 /**
  *
  * @author agin0
  */
+@Data
 public class Main extends javax.swing.JFrame {
 
     /**

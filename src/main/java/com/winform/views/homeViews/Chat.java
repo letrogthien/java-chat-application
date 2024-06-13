@@ -4,10 +4,13 @@
  */
 package com.winform.views.homeViews;
 
+import lombok.Data;
+
 /**
  *
  * @author agin0
  */
+@Data
 public class Chat extends javax.swing.JPanel {
 
     /**

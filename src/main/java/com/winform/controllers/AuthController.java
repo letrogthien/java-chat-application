@@ -23,6 +23,8 @@ public class AuthController {
     private User user;
     private AuthService authService;
     private Main main;
+    
+    
 
     public AuthController(LoginRegister loginRegister,Main main) {
         this.loginRegister = loginRegister;
@@ -47,6 +49,7 @@ public class AuthController {
         char[] password = loginRegister.getParentLogin1().getLoginForm2().getJPasswordField1().getPassword();
         if (authService.login(username, new String(password))) {
             loginRegister.setVisible(false);
+            HomeController homeController = new HomeController(main);
             main.setVisible(true);
         }
         else {

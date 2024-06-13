@@ -6,6 +6,11 @@ package com.winform.views.homeViews;
 
 import com.winform.customComponent.PanelRound;
 import com.winform.customComponent.UserItem;
+import com.winform.eventListener.ChatEvent;
+import com.winform.models.User;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
 import javax.swing.JPanel;
 import lombok.Data;
 import net.miginfocom.swing.MigLayout;
@@ -17,6 +22,13 @@ import net.miginfocom.swing.MigLayout;
 @Data
 public class Menu_Right extends JPanel {
 
+    private List<User> user;
+    private ChatEvent chatEvent;
+
+    public void setUserSelectionListener(ChatEvent listener) {
+        this.chatEvent = listener;
+    }
+
     /**
      * Creates new form Menu_Right
      */
@@ -24,15 +36,35 @@ public class Menu_Right extends JPanel {
         initComponents();
         init();
     }
-    public void init(){
+
+    public void init() {
         jLayeredList.setLayout(new MigLayout("fillx", "0[]0", "1[]1"));
+
+    }
+
+    public void setPeople(List<User> user) {
+        this.user = user;
         showPeople();
     }
+
     private void showPeople() {
+        jLayeredList.removeAll();
         //  test data
-        for (int i = 0; i < 25; i++) {
-            jLayeredList.add(new UserItem("People " + i), "wrap");
+        for (User user1 : user) {
+            UserItem userItem = new UserItem(user1.getUserName());
+            userItem.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (chatEvent != null) {
+                        chatEvent.onUserSelected(user1);
+                    }
+                }
+            });
+            jLayeredList.add(userItem, "wrap");
+
         }
+        this.jLayeredList.validate();
+        this.jLayeredList.repaint();
     }
 
     /**

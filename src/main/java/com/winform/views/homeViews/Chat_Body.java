@@ -4,8 +4,10 @@ import com.winform.swing.ScrollBar;
 import java.awt.Color;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import lombok.Data;
 import net.miginfocom.swing.MigLayout;
 
+@Data
 public class Chat_Body extends javax.swing.JPanel {
 
     public Chat_Body() {

@@ -5,12 +5,14 @@
 package com.winform.views.homeViews;
 
 import javax.swing.JLayeredPane;
+import lombok.Data;
 import net.miginfocom.swing.MigLayout;
 
 /**
  *
  * @author agin0
  */
+@Data
 public class Home extends JLayeredPane {
 
     /**
