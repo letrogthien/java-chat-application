@@ -1,9 +1,10 @@
- package com.winform.views.homeViews;
+package com.winform.views.homeViews;
 
+import com.winform.event.EventChat;
 import com.winform.event.PublicEvent;
 import com.winform.swing.JIMSendTextPane;
 import com.winform.swing.ScrollBar;
- import java.awt.Color;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -16,17 +17,23 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import net.miginfocom.swing.MigLayout;
 
-
 public class Chat_Bottom extends javax.swing.JPanel {
 
+    private EventChat eventChat;
+
+    public void chat1(EventChat eventChat) {
+        this.eventChat = eventChat;
+    }
+
     
-  public Chat_Bottom() {
+
+    public Chat_Bottom() {
         initComponents();
         init();
     }
 
     private void init() {
-        setLayout(new MigLayout("fillx, filly", "0[fill]0[]0[]2", "2[fill]2"));
+        setLayout(new MigLayout("fillx, filly", "0[fill]0[]0[]0", "4[fill]8"));
         JScrollPane scroll = new JScrollPane();
         scroll.setBorder(null);
         JIMSendTextPane txt = new JIMSendTextPane();
@@ -51,13 +58,13 @@ public class Chat_Bottom extends javax.swing.JPanel {
         cmd.setBorder(null);
         cmd.setContentAreaFilled(false);
         cmd.setCursor(new Cursor(Cursor.HAND_CURSOR));
-       cmd.setIcon(new ImageIcon(getClass().getResource("/icon/send.png")));
+        cmd.setIcon(new ImageIcon(getClass().getResource("/icon/send.png")));
         cmd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 String text = txt.getText().trim();
                 if (!text.equals("")) {
-                    PublicEvent.getInstance().getEventChat().sendMessage(text);
+                    eventChat.sendMessage(text);
                     txt.setText("");
                     txt.grabFocus();
                     refresh();
@@ -70,10 +77,11 @@ public class Chat_Bottom extends javax.swing.JPanel {
         add(panel);
     }
 
-    private void refresh() {
+    public void refresh() {
         revalidate();
-    }    
-    
+        repaint(); // Ensures UI is repainted
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

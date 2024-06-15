@@ -8,6 +8,7 @@ com\winform\swing\PictureBox.class
 com\winform\views\homeViews\Chat_Bottom$1.class
 com\winform\views\homeViews\View_image$2.class
 com\winform\views\homeViews\Chat_Left.class
+com\winform\controllers\HomeController$3.class
 com\winform\views\authViews\LoginForm.class
 com\winform\views\authViews\RegisterForm.class
 com\winform\models\Message.class
@@ -20,6 +21,7 @@ com\winform\views\authViews\RegisterForm$1.class
 com\winform\views\homeViews\Chat_Bottom.class
 com\winform\views\LoginRegister.class
 com\winform\swing\ProgressCircleUI.class
+com\winform\controllers\HomeController$2.class
 com\winform\views\homeViews\Home.class
 com\winform\services\UserService.class
 com\winform\event\EventChat.class
@@ -32,6 +34,8 @@ com\winform\swing\JIMSendTextPane$WarpColumnFactory.class
 com\winform\views\authViews\ForgotPass$1.class
 com\winform\swing\JIMSendTextPane$WarpLabelView.class
 com\winform\views\homeViews\View_image$1.class
+com\winform\controllers\HomeController$1.class
+com\winform\SocketClient$1.class
 com\winform\views\homeViews\Chat_Bottom$2.class
 com\winform\controllers\MenuRightController.class
 com\winform\views\homeViews\Chat_Right.class
@@ -42,12 +46,14 @@ com\winform\controllers\AuthController.class
 com\winform\swing\Progress.class
 com\winform\swing\Progress$ProgressType.class
 com\winform\services\AuthService.class
+com\winform\SocketClient$1$1.class
 com\winform\swing\blurHash\Base83.class
 com\winform\views\homeViews\Chat_Image.class
 com\winform\views\authViews\SvgJpanel.class
 com\winform\eventListener\ChatEvent.class
 com\winform\customComponent\PanelRound.class
 com\winform\swing\blurHash\Util.class
+com\winform\controllers\HomeController$3$1.class
 com\winform\swing\ModernScrollBarUI$1.class
 com\winform\controllers\HomeController.class
 com\winform\views\Main.class
@@ -78,7 +84,6 @@ com\winform\views\homeViews\Chat_Image$1.class
 com\winform\event\EventImageView.class
 com\winform\views\homeViews\Chat_File.class
 com\winform\swing\JIMSendTextPane$WarpEditorKit.class
-com\winform\views\homeViews\Chat$1.class
 com\winform\views\homeViews\Chat_Date.class
 com\winform\customComponent\ImageAvatar.class
 com\winform\swing\ModernScrollBarUI$InvisibleScrollBarButton.class

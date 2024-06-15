@@ -4,10 +4,13 @@
  */
 package com.winform.models;
 
+import lombok.Data;
+
 /**
  *
  * @author agin0
  */
+
 public enum Messagetype {
     TEXT,
     IMAGE,

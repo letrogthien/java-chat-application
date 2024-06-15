@@ -33,10 +33,14 @@ public class SessionManager {
 
     // Public method to provide access to the instance
     public static synchronized SessionManager getInstance(Integer userID) {
-        if (instance == null) {
+        if (instance == null && userID != null) {
             instance = new SessionManager(userID);
         }
         return instance;
+    }
+    
+    public Integer getUserId(){
+        return this.userID;
     }
 
     public boolean isExpiration() {

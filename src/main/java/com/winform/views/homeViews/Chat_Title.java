@@ -1,11 +1,20 @@
 package com.winform.views.homeViews;
 
+import com.winform.models.User;
 import java.awt.Color;
+import lombok.Data;
 
+@Data
 public class Chat_Title extends javax.swing.JPanel {
 
     public Chat_Title() {
         initComponents();
+    }
+
+    public void refresh() {
+        revalidate();
+        repaint();
+
     }
 
     public void setUserName(String userName) {
@@ -48,9 +57,9 @@ public class Chat_Title extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(33, 33, 33)
                 .addComponent(layer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(406, Short.MAX_VALUE))
+                .addContainerGap(364, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

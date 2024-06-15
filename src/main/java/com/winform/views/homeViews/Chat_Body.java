@@ -1,5 +1,6 @@
 package com.winform.views.homeViews;
 
+import com.winform.models.User;
 import com.winform.swing.ScrollBar;
 import java.awt.Adjustable;
 import java.awt.Color;
@@ -7,23 +8,32 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import javax.swing.Icon;
 import javax.swing.JScrollBar;
+import lombok.Data;
 import net.miginfocom.swing.MigLayout;
 
+@Data
+public class Chat_Body extends javax.swing.JPanel {
 
- public class Chat_Body extends javax.swing.JPanel {
+    private User user;
+
+    public void clearMessages() {
+    body.removeAll(); // Xóa tất cả các component trong 'body'
+    body.revalidate(); // Làm mới bố cục sau khi xóa
+    body.repaint(); // Yêu cầu vẽ lại để phản ánh sự thay đổi
+}
 
     public Chat_Body() {
         initComponents();
         init();
-      //  addItemRight("Send a text message to a group of contacts. Include photos, personalize your texts, and track who clicked your links.", new ImageIcon(getClass().getResource("/icon/testing/dog.jpg")), new ImageIcon(getClass().getResource("/icon/testing/dog.jpg")));
+        //  addItemRight("Send a text message to a group of contacts. Include photos, personalize your texts, and track who clicked your links.", new ImageIcon(getClass().getResource("/icon/testing/dog.jpg")), new ImageIcon(getClass().getResource("/icon/testing/dog.jpg")));
         addItemRight("hello\nHi");
-      //  addItemLeft("Simpletext started as a passion project because I couldn’t find what I was looking for. Most apps were trying to do too much and ended up bloated with features I don’t need. So I built Simpletext based on a simple premise — what if there’s an app that refuses to do more, choosing instead to do just one thing, and do it well? For Simpletext, that one thing is writing.", "Raven", new ImageIcon(getClass().getResource("/icon/testing/dog.jpg")), new ImageIcon(getClass().getResource("/icon/testing/dog.jpg")));
-     //   addDate("05/06/2021");
-      //  String img[] = {"LsR_n]j[YkkCcEfQiwfkpJfkngf6", "LsR_n]j[YkkCcEfQiwfkpJfkngf6"};
-      //  addItemLeft("hello\nerererew\newewe", "Dara", img);
-      //  addItemRight("hello\nerererew\newewe", new ImageIcon(getClass().getResource("/icon/testing/dog.jpg")));
-      //  addItemFile("", "Dara", "my doc.pdf", "1 MB");
-      //  addItemFileRight("", "myfile.rar", "15 MB");
+        //  addItemLeft("Simpletext started as a passion project because I couldn’t find what I was looking for. Most apps were trying to do too much and ended up bloated with features I don’t need. So I built Simpletext based on a simple premise — what if there’s an app that refuses to do more, choosing instead to do just one thing, and do it well? For Simpletext, that one thing is writing.", "Raven", new ImageIcon(getClass().getResource("/icon/testing/dog.jpg")), new ImageIcon(getClass().getResource("/icon/testing/dog.jpg")));
+        //   addDate("05/06/2021");
+        //  String img[] = {"LsR_n]j[YkkCcEfQiwfkpJfkngf6", "LsR_n]j[YkkCcEfQiwfkpJfkngf6"};
+        //  addItemLeft("hello\nerererew\newewe", "Dara", img);
+        //  addItemRight("hello\nerererew\newewe", new ImageIcon(getClass().getResource("/icon/testing/dog.jpg")));
+        //  addItemFile("", "Dara", "my doc.pdf", "1 MB");
+        //  addItemFileRight("", "myfile.rar", "15 MB");
 
     }
 
@@ -36,7 +46,7 @@ import net.miginfocom.swing.MigLayout;
     public void addItemLeft(String text, String user, Icon... image) {
         Chat_Left_With_Profile item = new Chat_Left_With_Profile();
         item.setText(text);
-        item.setImage(image);   
+        item.setImage(image);
         item.setTime();
         item.setUserProfile(user);
         body.add(item, "wrap, w 100::80%");
@@ -44,7 +54,7 @@ import net.miginfocom.swing.MigLayout;
         body.repaint();
         body.revalidate();
     }
-    
+
     public void addItemLeft(String text, String user, String[] image) {
         Chat_Left_With_Profile item = new Chat_Left_With_Profile();
         item.setText(text);
@@ -56,7 +66,7 @@ import net.miginfocom.swing.MigLayout;
         body.repaint();
         body.revalidate();
     }
-    
+
     public void addItemFile(String text, String user, String fileName, String fileSize) {
         Chat_Left_With_Profile item = new Chat_Left_With_Profile();
         item.setText(text);
@@ -69,7 +79,7 @@ import net.miginfocom.swing.MigLayout;
         body.revalidate();
     }
 
-      public void addItemRight(String text, Icon... image) {
+    public void addItemRight(String text, Icon... image) {
         Chat_Right item = new Chat_Right();
         item.setText(text);
         item.setImage(image);
@@ -81,8 +91,6 @@ import net.miginfocom.swing.MigLayout;
         scrollToBottom();
     }
 
-
-    
     public void addItemFileRight(String text, String fileName, String fileSize) {
         Chat_Right item = new Chat_Right();
         item.setText(text);
@@ -100,6 +108,7 @@ import net.miginfocom.swing.MigLayout;
         body.repaint();
         body.revalidate();
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -110,7 +119,7 @@ import net.miginfocom.swing.MigLayout;
         sp.setBorder(null);
         sp.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        body.setBackground(new java.awt.Color(255, 255, 255));
+        body.setBackground(new java.awt.Color(255, 255, 153));
 
         javax.swing.GroupLayout bodyLayout = new javax.swing.GroupLayout(body);
         body.setLayout(bodyLayout);
@@ -120,7 +129,7 @@ import net.miginfocom.swing.MigLayout;
         );
         bodyLayout.setVerticalGroup(
             bodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 555, Short.MAX_VALUE)
+            .addGap(0, 708, Short.MAX_VALUE)
         );
 
         sp.setViewportView(body);
@@ -133,7 +142,9 @@ import net.miginfocom.swing.MigLayout;
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(sp)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(sp))
         );
     }// </editor-fold>//GEN-END:initComponents
     private void scrollToBottom() {
