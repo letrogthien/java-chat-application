@@ -2,6 +2,7 @@ package com.winform.views.homeViews;
 
 import com.winform.event.EventChat;
 import com.winform.event.PublicEvent;
+import java.awt.Dimension;
 import lombok.Data;
 import net.miginfocom.swing.MigLayout;
 
@@ -11,7 +12,7 @@ import net.miginfocom.swing.MigLayout;
  */
 @Data
 public class Chat extends javax.swing.JPanel {
-
+   
     public Chat() {
         initComponents();
         init();
@@ -39,14 +40,15 @@ public class Chat extends javax.swing.JPanel {
         chat_Title1 = new com.winform.views.homeViews.Chat_Title();
         chat_Bottom1 = new com.winform.views.homeViews.Chat_Bottom();
 
-        setBackground(new java.awt.Color(153, 153, 153));
+        setBackground(new java.awt.Color(255, 255, 255));
+        setForeground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(400, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(chat_Bottom1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+            .addComponent(chat_Bottom1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -59,7 +61,7 @@ public class Chat extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(chat_Title1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chat_Body1, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                .addComponent(chat_Body1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chat_Bottom1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
         );

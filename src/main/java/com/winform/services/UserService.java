@@ -44,9 +44,11 @@ public class UserService {
                 user.setEmail(result.getString(5));
                 user.setFullName(result.getString(6));
                 user.setNickName(result.getString(7));
+                
                 if (result.getString(8) != null) {
                     user.setUserStatus(UserStatus.valueOf(result.getString(8).toUpperCase()));
                 }
+                user.setAvatar(result.getString("avatar"));
                 users.add(user);
             }
 
@@ -56,6 +58,34 @@ public class UserService {
             connectionHandler.closeConnection();
         }
         return users;
+    }
+    
+    public  User getUSerById(Integer id){
+        String sqlString = "SELECT * FROM users WHERE id=?";
+        User user = new User();
+        try {
+            connectionHandler.connectDb();
+            PreparedStatement pre = connectionHandler.getConnection().prepareStatement(sqlString);
+            pre.setInt(1, id);
+            ResultSet rs = pre.executeQuery();
+            if (!rs.next()) {
+                System.out.println("user khong ton tai");
+                return null;
+            }
+            user.setId(rs.getInt("id"));
+            user.setEmail(rs.getString("email"));
+            user.setPassword(rs.getString("password"));
+            user.setPhone(rs.getString("phone"));
+            user.setUserName(rs.getString("username"));
+            user.setFullName(rs.getString("fullname"));
+            user.setAvatar(rs.getString("avatar"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionHandler.closeConnection();
+        }
+        return user;
+
     }
 
 }

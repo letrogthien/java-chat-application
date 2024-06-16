@@ -38,7 +38,7 @@ public class Menu_Right extends JPanel {
     }
 
     public void init() {
-        jLayeredList.setLayout(new MigLayout("fillx", "0[]0", "1[]1"));
+        jLayeredList.setLayout(new MigLayout("fillx", "0[]0", "4[]4"));
 
     }
 
@@ -81,14 +81,25 @@ public class Menu_Right extends JPanel {
         jLayeredList = new javax.swing.JLayeredPane();
         panelRound1 = new com.winform.customComponent.PanelRound();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         setMaximumSize(new java.awt.Dimension(200, 32767));
         setMinimumSize(new java.awt.Dimension(200, 0));
 
         panelRound2.setBackground(new java.awt.Color(255, 255, 255));
+        panelRound2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        panelRound2.setForeground(new java.awt.Color(255, 255, 255));
         panelRound2.setRoundBottomRight(25);
         panelRound2.setRoundTopRight(25);
 
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setHorizontalScrollBar(null);
+
+        jLayeredList.setBackground(new java.awt.Color(255, 255, 255));
+        jLayeredList.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jLayeredList.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jLayeredListLayout = new javax.swing.GroupLayout(jLayeredList);
         jLayeredList.setLayout(jLayeredListLayout);
@@ -103,7 +114,7 @@ public class Menu_Right extends JPanel {
 
         jScrollPane1.setViewportView(jLayeredList);
 
-        panelRound1.setBackground(new java.awt.Color(153, 153, 153));
+        panelRound1.setBackground(new java.awt.Color(255, 204, 204));
         panelRound1.setRoundBottomLeft(30);
         panelRound1.setRoundBottomRight(30);
         panelRound1.setRoundTopLeft(30);
@@ -124,11 +135,11 @@ public class Menu_Right extends JPanel {
         panelRound2.setLayout(panelRound2Layout);
         panelRound2Layout.setHorizontalGroup(
             panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
             .addGroup(panelRound2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addComponent(jScrollPane1)
         );
         panelRound2Layout.setVerticalGroup(
             panelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,7 +147,7 @@ public class Menu_Right extends JPanel {
                 .addContainerGap()
                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

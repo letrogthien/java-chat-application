@@ -69,6 +69,7 @@ public class AuthService {
             user.setPhone(rs.getString("phone"));
             user.setUserName(rs.getString("username"));
             user.setFullName(rs.getString("fullname"));
+            user.setAvatar(rs.getString("avatar"));
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

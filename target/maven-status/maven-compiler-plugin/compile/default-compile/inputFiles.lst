@@ -9,6 +9,7 @@ D:\winapp\app\java-chat-application\src\main\java\com\winform\swing\blurHash\Blu
 D:\winapp\app\java-chat-application\src\main\java\com\winform\controllers\AuthController.java
 D:\winapp\app\java-chat-application\src\main\java\com\winform\swing\blurHash\SRGB.java
 D:\winapp\app\java-chat-application\src\main\java\com\winform\event\EventChat.java
+D:\winapp\app\java-chat-application\src\main\java\com\winform\models\LocalMessage.java
 D:\winapp\app\java-chat-application\src\main\java\com\winform\models\User.java
 D:\winapp\app\java-chat-application\src\main\java\com\winform\views\homeViews\Menu_Left.java
 D:\winapp\app\java-chat-application\src\main\java\com\winform\views\homeViews\Chat_Date.java
@@ -25,6 +26,7 @@ D:\winapp\app\java-chat-application\src\main\java\com\winform\views\homeViews\Ch
 D:\winapp\app\java-chat-application\src\main\java\com\winform\SocketClient.java
 D:\winapp\app\java-chat-application\src\main\java\com\winform\views\homeViews\Chat_Left.java
 D:\winapp\app\java-chat-application\src\main\java\com\winform\customComponent\Image_Item.java
+D:\winapp\app\java-chat-application\src\main\java\com\winform\restapi\ChatClient.java
 D:\winapp\app\java-chat-application\src\main\java\com\winform\views\authViews\RegisterForm.java
 D:\winapp\app\java-chat-application\src\main\java\com\winform\customComponent\PanelRound.java
 D:\winapp\app\java-chat-application\src\main\java\com\winform\views\homeViews\Chat.java

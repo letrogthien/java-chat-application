@@ -4,6 +4,8 @@
  */
 package com.winform.models;
 
+import com.winform.models.Message;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,14 +17,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
-    private Integer id;
-    private String userName;
-    private String password;
-    private String phone;
-    private String email;
-    private String fullName;
-    private String nickName;
-    private UserStatus userStatus;
-    private String avatar;
+public class LocalMessage {
+    private List<Message> message;
+    private User user;
+    
 }

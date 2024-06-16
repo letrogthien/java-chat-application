@@ -9,9 +9,11 @@ import com.winform.config.session.SessionManager;
 import com.winform.event.EventChat;
 import com.winform.event.PublicEvent;
 import com.winform.eventListener.ChatEvent;
+import com.winform.models.LocalMessage;
 import com.winform.models.Message;
 import com.winform.models.Messagetype;
 import com.winform.models.User;
+import com.winform.restapi.ChatClient;
 import com.winform.services.UserService;
 import com.winform.views.Main;
 import com.winform.views.homeViews.Chat;
@@ -22,6 +24,7 @@ import java.awt.TrayIcon.MessageType;
 import java.lang.reflect.Type;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 import java.util.Date;
 import java.util.List;
@@ -56,6 +59,9 @@ public class HomeController {
     private SessionManager sessionManager;
     private Menu_Right menuRight;
     private StompSession stompSession;
+    private ChatClient chatClient = new ChatClient();
+
+    private List<LocalMessage> localMessages = new ArrayList<>();
 
     public HomeController(Main main) {
         this.main = main;
@@ -69,37 +75,59 @@ public class HomeController {
     }
 
     private void initController() {
-        updateChatEvent();
+
         updateUserList();
         connectSocket();
         main.getHome().getMenu_Right1().setUserSelectionListener(new ChatEvent() {
             @Override
             public void onUserSelected(User user) {
-                // Xử lý khi người dùng được chọn, ví dụ:
+                if (!checkStoredHaveMessage(user)) {
+                    List<Message> messages = getMessageFromServer(user);
+                    LocalMessage localMessage = new LocalMessage(messages, user);
+                    localMessages.add(localMessage);
+                }
+                updateChatEvent(user);
                 updateChatView(user);
             }
         });
     }
 
-    private void updateChatEvent() {
+    private List<Message> getMessageFromServer(User user) {
+        return chatClient.getMessage(sessionManager.getUserId(), user.getId());
+    }
 
-        EventChat eventChat = new EventChat() {
-            @Override
-            public void sendMessage(String text) {
-                Message message = new Message();
-                message.setSenderId(sessionManager.getUserId()); // ID của người gửi
-                message.setRecipientId(5); // ID của người nhận
-                message.setTimestamp(new Date(System.currentTimeMillis()));
-                message.setContent(text);
-                message.setMessageType(Messagetype.TEXT);
-                message.setReadReceipt(false);
-                message.setChatId("chat123");
-                message.setStatus("sent");
-                sendPrivateMessage(message);
-                main.getHome().getChat1().getChat_Body1().addItemRight(text);
+    private boolean checkStoredHaveMessage(User user) {
+        if (localMessages != null) {
+            for (LocalMessage localMessage : localMessages) {
+                if (localMessage.getUser().equals(user)) {
+                    return true;
+                }
             }
-        };
-        main.getHome().getChat1().getChat_Bottom1().chat1(eventChat);
+        }
+        return false;
+    }
+
+    private void updateChatEvent(User user) {
+
+        if (user != null) {
+            EventChat eventChat = new EventChat() {
+                @Override
+                public void sendMessage(String text) {
+                    Message message = new Message();
+                    message.setSenderId(sessionManager.getUserId()); // ID của người gửi
+                    message.setRecipientId(user.getId()); // ID của người nhận
+                    message.setTimestamp(new Date(System.currentTimeMillis()));
+                    message.setContent(text);
+                    message.setMessageType(Messagetype.TEXT);
+                    message.setReadReceipt(false);
+                    message.setChatId("chat123");
+                    message.setStatus("sent");
+                    sendPrivateMessage(message);
+                    main.getHome().getChat1().getChat_Body1().addItemRight(text);
+                }
+            };
+            main.getHome().getChat1().getChat_Bottom1().chat1(eventChat);
+        }
     }
 
     public void sendPrivateMessage(Message message) {
@@ -135,6 +163,8 @@ public class HomeController {
                         Message message = (Message) payload;
                         System.out.println("Received message: " + message);
                         System.out.println("Message received successfully: " + message);
+                        User user = userService.getUSerById(message.getSenderId());
+                        main.getHome().getChat1().getChat_Body1().addItemLeft(message.getContent(), user);
                     }
 
                 });
@@ -142,7 +172,7 @@ public class HomeController {
             }
         };
 
-        stompClient.connect("ws://localhost:8080/ws/websocket", sessionHandler);
+        stompClient.connect("ws://152.42.225.60:8080/ws/websocket", sessionHandler);
 
         // Chờ cho đến khi kết nối hoàn thành hoặc timeout
         try {
@@ -156,14 +186,36 @@ public class HomeController {
 
     private void updateChatView(User user) {
         main.getHome().getChat1().getChat_Body1().clearMessages();
-
         main.getHome().getChat1().getChat_Title1().setUserName(user.getUserName());
-
+        displayMessageUser(user);
         main.getHome().getChat1().refresh();
+
     }
 
     public void updateUserList() {
         List<User> users = userService.getListUser();
+        System.out.println(users);
         main.getHome().getMenu_Right1().setPeople(users);
     }
+
+    public void displayMessageUser(User user) {
+        for (int i = 0; i < localMessages.size(); i++) {
+            if (localMessages.get(i).getUser().equals(user)) {
+                List<Message> messages = localMessages.get(i).getMessage();
+                for (Message message : messages) {
+                    if (message.getSenderId() == user.getId()) {
+                        main.getHome().getChat1().getChat_Body1().addItemRight(message.getContent());
+                    } else {
+                        main.getHome().getChat1().getChat_Body1().addItemLeft(message.getContent(), user);
+
+                    }
+                }
+            }
+        }
+    }
+
+    public void addToLocalMessage(LocalMessage e) {
+        this.localMessages.add(e);
+    }
+
 }

@@ -16,7 +16,7 @@ import lombok.Data;
 @Data
 public class ConnectionHandler {
 
-    private static final String DATABASE_URL = "jdbc:mysql://152.42.248.95/winapp?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC";
+    private static final String DATABASE_URL = "jdbc:mysql://152.42.225.60/winapp?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC";
     private static final String USER = "root";
     private static final String PASSWORD = "Abcd1234";
     private Connection connection;

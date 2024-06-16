@@ -23,4 +23,5 @@ public class Message {
     private boolean readReceipt;
     private String chatId;
     private String status;
+    
 }

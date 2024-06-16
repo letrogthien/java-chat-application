@@ -4,6 +4,10 @@
  */
 package com.winform.customComponent;
 
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 /**
  *
  * @author agin0
@@ -15,6 +19,17 @@ public class UserItem extends javax.swing.JPanel {
      */
     public UserItem(String name) {
         initComponents();
+          addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent me) {
+                setBackground(new Color(230, 230, 230));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent me) {
+                setBackground(new Color(250, 250, 250));
+            }
+        });
         jLabelName.setText(name);
     }
 
@@ -29,6 +44,8 @@ public class UserItem extends javax.swing.JPanel {
 
         jLabelName = new javax.swing.JLabel();
         imageAvatar1 = new com.winform.customComponent.ImageAvatar();
+
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jLabelName.setText("name");
 
