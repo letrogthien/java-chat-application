@@ -62,9 +62,10 @@ public class HomeController {
     private StompSession stompSession;
     private ChatClient chatClient = new ChatClient();
     private List<LocalMessage> localMessages = new ArrayList<>();
+    private User targetUser;
 
     public HomeController(Main main) {
-
+        this.targetUser= new User();
         this.main = main;
         this.userService = new UserService();
 
@@ -76,12 +77,13 @@ public class HomeController {
     }
 
     private void initController() {
-
-        updateUserList();
         connectSocket();
+        updateUserList();
+
         main.getHome().getMenu_Right1().setUserSelectionListener(new ChatEvent() {
             @Override
             public void onUserSelected(User user) {
+                targetUser =user;
                 if (!checkStoredHaveMessage(user)) {
                     List<Message> messages = getMessageFromServer(user);
                     LocalMessage localMessage = new LocalMessage(messages, user);
@@ -127,6 +129,7 @@ public class HomeController {
                     message.setStatus("sent");
                     sendPrivateMessage(message);
                     main.getHome().getChat1().getChat_Body1().addItemRight(text);
+                    addMessage(user.getId(), message);
                 }
             };
             main.getHome().getChat1().getChat_Bottom1().chat1(eventChat);
@@ -167,7 +170,11 @@ public class HomeController {
                         System.out.println("Received message: " + message);
                         System.out.println("Message received successfully: " + message);
                         User user = userService.getUSerById(message.getSenderId());
-                        main.getHome().getChat1().getChat_Body1().addItemLeft(message.getContent(), user);
+                        if (user.getId() == targetUser.getId()) {
+                            main.getHome().getChat1().getChat_Body1().addItemLeft(message.getContent(), user);
+                        }
+                        addMessage(user.getId(), message);
+                        
                     }
 
                 });
@@ -207,9 +214,9 @@ public class HomeController {
                 List<Message> messages = localMessages.get(i).getMessage();
                 for (Message message : messages) {
                     if (message.getSenderId() == user.getId()) {
-                        main.getHome().getChat1().getChat_Body1().addItemRight(message.getContent());
+                        main.getHome().getChat1().getChat_Body1().addItemLeft(message.getContent(),user);
                     } else {
-                        main.getHome().getChat1().getChat_Body1().addItemLeft(message.getContent(), user);
+                        main.getHome().getChat1().getChat_Body1().addItemRight(message.getContent());
 
                     }
                 }
@@ -221,15 +228,23 @@ public class HomeController {
         String searchString = this.main.getHome().getMenu_Right1().getJTextField1().getText();
         List<User> users = userService.findUSer(searchString);
         System.out.println(users);
-        
-        
+
         this.main.getHome().getMenu_Right1().setPeople(users);
 
-        
     }
 
     public void addToLocalMessage(LocalMessage e) {
         this.localMessages.add(e);
+    }
+    
+    private void addMessage(Integer userId, Message message){
+        for (LocalMessage localMessage : this.localMessages) {
+            if (localMessage.getUser().getId() == userId){
+                if(localMessage.getMessage()!= null){
+                    localMessage.getMessage().add(message);
+                }
+            }
+        }
     }
 
 }
