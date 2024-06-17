@@ -44,7 +44,7 @@ public class UserService {
                 user.setEmail(result.getString(5));
                 user.setFullName(result.getString(6));
                 user.setNickName(result.getString(7));
-                
+
                 if (result.getString(8) != null) {
                     user.setUserStatus(UserStatus.valueOf(result.getString(8).toUpperCase()));
                 }
@@ -59,8 +59,8 @@ public class UserService {
         }
         return users;
     }
-    
-    public  User getUSerById(Integer id){
+
+    public User getUSerById(Integer id) {
         String sqlString = "SELECT * FROM users WHERE id=?";
         User user = new User();
         try {
@@ -86,6 +86,47 @@ public class UserService {
         }
         return user;
 
+    }
+
+    public List<User> findUSer(String k) {
+        String sqlString = "SELECT * FROM users WHERE username LIKE ? OR fullname LIKE ? OR email LIKE ? ";
+        List<User> users = new ArrayList<User>();
+        try {
+            connectionHandler.connectDb();
+            PreparedStatement pre = connectionHandler.getConnection().prepareStatement(sqlString);
+            String key = "%" + k + "%";
+            pre.setString(1, key);
+            pre.setString(2, key);
+            pre.setString(3, key);
+      
+
+            ResultSet result = pre.executeQuery();
+
+     
+            while (result.next()) {
+                User user = new User();
+                user.setId(result.getInt(1));
+                user.setUserName(result.getString(2));
+                user.setPassword(result.getString(3));
+                user.setPhone(result.getString(4));
+                user.setEmail(result.getString(5));
+                user.setFullName(result.getString(6));
+                user.setNickName(result.getString(7));
+
+                if (result.getString(8) != null) {
+                    user.setUserStatus(UserStatus.valueOf(result.getString(8).toUpperCase()));
+                }
+                user.setAvatar(result.getString("avatar"));
+                users.add(user);
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionHandler.closeConnection();
+        }
+        return users;
     }
 
 }

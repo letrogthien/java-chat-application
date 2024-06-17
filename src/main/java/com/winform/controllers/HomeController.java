@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import javax.swing.SwingUtilities;
 
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
@@ -60,10 +61,10 @@ public class HomeController {
     private Menu_Right menuRight;
     private StompSession stompSession;
     private ChatClient chatClient = new ChatClient();
-
     private List<LocalMessage> localMessages = new ArrayList<>();
 
     public HomeController(Main main) {
+
         this.main = main;
         this.userService = new UserService();
 
@@ -90,6 +91,8 @@ public class HomeController {
                 updateChatView(user);
             }
         });
+        this.main.getHome().getMenu_Right1().getJButton1().addActionListener(e -> searchAction());
+
     }
 
     private List<Message> getMessageFromServer(User user) {
@@ -212,6 +215,17 @@ public class HomeController {
                 }
             }
         }
+    }
+
+    private void searchAction() {
+        String searchString = this.main.getHome().getMenu_Right1().getJTextField1().getText();
+        List<User> users = userService.findUSer(searchString);
+        System.out.println(users);
+        
+        
+        this.main.getHome().getMenu_Right1().setPeople(users);
+
+        
     }
 
     public void addToLocalMessage(LocalMessage e) {

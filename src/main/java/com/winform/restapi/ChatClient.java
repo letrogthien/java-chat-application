@@ -13,18 +13,18 @@ import com.google.gson.reflect.TypeToken;
 import com.winform.models.Message;
 import java.net.URI;
 
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Collections;
 import java.util.List;
 
 public class ChatClient {
 
-    // Giữ nguyên phương thức getMessage với một điều chỉnh nhỏ để cải thiện việc xử lý ngoại lệ và log
     public List<Message> getMessage(Integer u1, Integer u2) {
         HttpClient client = HttpClient.newHttpClient();
         String url = String.format("http://152.42.225.60/v1/getmessage?u1=%d&u2=%d", u1, u2);
@@ -35,7 +35,6 @@ public class ChatClient {
         
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            // Log để debug
             System.out.println("Response body: " + response.body());
             Gson gson = new Gson();
             Type listType = new TypeToken<List<Message>>(){}.getType();
@@ -44,6 +43,6 @@ public class ChatClient {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        return Collections.emptyList(); // Sử dụng Collections.emptyList() để tránh NullPointerException
+        return Collections.emptyList(); 
     }
 }
