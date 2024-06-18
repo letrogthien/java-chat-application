@@ -7,6 +7,7 @@ package com.winform.services;
 import com.winform.config.db.ConnectionHandler;
 import com.winform.config.session.SessionManager;
 import com.winform.models.User;
+import com.winform.models.UserStatus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,6 +71,7 @@ public class AuthService {
             user.setUserName(rs.getString("username"));
             user.setFullName(rs.getString("fullname"));
             user.setAvatar(rs.getString("avatar"));
+            user.setUserStatus(rs.getString(8));
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

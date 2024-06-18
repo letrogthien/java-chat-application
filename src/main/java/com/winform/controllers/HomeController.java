@@ -43,6 +43,7 @@ import org.springframework.web.socket.client.WebSocketClient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.socket.WebSocketHttpHeaders;
 
 /**
  *
@@ -65,7 +66,7 @@ public class HomeController {
     private User targetUser;
 
     public HomeController(Main main) {
-        this.targetUser= new User();
+        this.targetUser = new User();
         this.main = main;
         this.userService = new UserService();
 
@@ -83,7 +84,7 @@ public class HomeController {
         main.getHome().getMenu_Right1().setUserSelectionListener(new ChatEvent() {
             @Override
             public void onUserSelected(User user) {
-                targetUser =user;
+                targetUser = user;
                 if (!checkStoredHaveMessage(user)) {
                     List<Message> messages = getMessageFromServer(user);
                     LocalMessage localMessage = new LocalMessage(messages, user);
@@ -150,13 +151,13 @@ public class HomeController {
         WebSocketStompClient stompClient = new WebSocketStompClient(client);
         stompClient.setMessageConverter(new MappingJackson2MessageConverter());
 
-        CountDownLatch latch = new CountDownLatch(1); // Tạo CountDownLatch
+        CountDownLatch latch = new CountDownLatch(1);
 
         StompSessionHandlerAdapter sessionHandler = new StompSessionHandlerAdapter() {
             @Override
             public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
                 stompSession = session;
-                latch.countDown(); // Giảm CountDownLatch khi kết nối thành công
+                latch.countDown();
                 System.out.println("connect ok");
                 session.subscribe("/user/" + sessionManager.getUserId().toString() + "/private", new StompFrameHandler() {
                     @Override
@@ -174,15 +175,16 @@ public class HomeController {
                             main.getHome().getChat1().getChat_Body1().addItemLeft(message.getContent(), user);
                         }
                         addMessage(user.getId(), message);
-                        
+
                     }
 
                 });
                 System.out.println(session);
             }
         };
-
-        stompClient.connect("ws://152.42.225.60:8080/ws/websocket", sessionHandler);
+     
+        
+        stompClient.connect("ws://localhost:8080/ws/websocket?userId="+sessionManager.getUserId().toString(), sessionHandler);
 
         // Chờ cho đến khi kết nối hoàn thành hoặc timeout
         try {
@@ -214,7 +216,7 @@ public class HomeController {
                 List<Message> messages = localMessages.get(i).getMessage();
                 for (Message message : messages) {
                     if (message.getSenderId() == user.getId()) {
-                        main.getHome().getChat1().getChat_Body1().addItemLeft(message.getContent(),user);
+                        main.getHome().getChat1().getChat_Body1().addItemLeft(message.getContent(), user);
                     } else {
                         main.getHome().getChat1().getChat_Body1().addItemRight(message.getContent());
 
@@ -236,11 +238,11 @@ public class HomeController {
     public void addToLocalMessage(LocalMessage e) {
         this.localMessages.add(e);
     }
-    
-    private void addMessage(Integer userId, Message message){
+
+    private void addMessage(Integer userId, Message message) {
         for (LocalMessage localMessage : this.localMessages) {
-            if (localMessage.getUser().getId() == userId){
-                if(localMessage.getMessage()!= null){
+            if (localMessage.getUser().getId() == userId) {
+                if (localMessage.getMessage() != null) {
                     localMessage.getMessage().add(message);
                 }
             }

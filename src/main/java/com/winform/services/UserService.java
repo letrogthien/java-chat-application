@@ -45,9 +45,7 @@ public class UserService {
                 user.setFullName(result.getString(6));
                 user.setNickName(result.getString(7));
 
-                if (result.getString(8) != null) {
-                    user.setUserStatus(UserStatus.valueOf(result.getString(8).toUpperCase()));
-                }
+                user.setUserStatus(result.getString(8));
                 user.setAvatar(result.getString("avatar"));
                 users.add(user);
             }
@@ -79,6 +77,7 @@ public class UserService {
             user.setUserName(rs.getString("username"));
             user.setFullName(rs.getString("fullname"));
             user.setAvatar(rs.getString("avatar"));
+            user.setUserStatus(rs.getString(8));
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -113,9 +112,7 @@ public class UserService {
                 user.setFullName(result.getString(6));
                 user.setNickName(result.getString(7));
 
-                if (result.getString(8) != null) {
-                    user.setUserStatus(UserStatus.valueOf(result.getString(8).toUpperCase()));
-                }
+                user.setUserStatus(result.getString(8));
                 user.setAvatar(result.getString("avatar"));
                 users.add(user);
 

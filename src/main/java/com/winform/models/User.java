@@ -23,6 +23,6 @@ public class User {
     private String email;
     private String fullName;
     private String nickName;
-    private UserStatus userStatus;
+    private String userStatus;
     private String avatar;
 }
