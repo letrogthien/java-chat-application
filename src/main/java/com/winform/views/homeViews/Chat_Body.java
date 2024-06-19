@@ -33,15 +33,7 @@ public class Chat_Body extends javax.swing.JPanel {
     public Chat_Body() {
         initComponents();
         init();
-        //  addItemRight("Send a text message to a group of contacts. Include photos, personalize your texts, and track who clicked your links.", new ImageIcon(getClass().getResource("/icon/testing/dog.jpg")), new ImageIcon(getClass().getResource("/icon/testing/dog.jpg")));
-        addItemRight("hello\nHi");
-        //  addItemLeft("Simpletext started as a passion project because I couldn’t find what I was looking for. Most apps were trying to do too much and ended up bloated with features I don’t need. So I built Simpletext based on a simple premise — what if there’s an app that refuses to do more, choosing instead to do just one thing, and do it well? For Simpletext, that one thing is writing.", "Raven", new ImageIcon(getClass().getResource("/icon/testing/dog.jpg")), new ImageIcon(getClass().getResource("/icon/testing/dog.jpg")));
-        //   addDate("05/06/2021");
-        //  String img[] = {"LsR_n]j[YkkCcEfQiwfkpJfkngf6", "LsR_n]j[YkkCcEfQiwfkpJfkngf6"};
-        //  addItemLeft("hello\nerererew\newewe", "Dara", img);
-        //  addItemRight("hello\nerererew\newewe", new ImageIcon(getClass().getResource("/icon/testing/dog.jpg")));
-        //  addItemFile("", "Dara", "my doc.pdf", "1 MB");
-        //  addItemFileRight("", "myfile.rar", "15 MB");
+       
 
     }
 

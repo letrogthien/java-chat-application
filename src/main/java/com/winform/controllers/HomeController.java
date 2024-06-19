@@ -199,6 +199,7 @@ public class HomeController {
     private void updateChatView(User user) {
         main.getHome().getChat1().getChat_Body1().clearMessages();
         main.getHome().getChat1().getChat_Title1().setUserName(user.getUserName());
+        main.getHome().getChat1().getChat_Title1().setStatusText(userService.getUSerById(user.getId()).getUserStatus());
         displayMessageUser(user);
         main.getHome().getChat1().refresh();
 

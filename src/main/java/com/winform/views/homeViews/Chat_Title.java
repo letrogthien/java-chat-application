@@ -22,13 +22,18 @@ public class Chat_Title extends javax.swing.JPanel {
     }
 
     public void statusActive() {
-        lbStatus.setText("Active now");
+        lbStatus.setText("Online");
         lbStatus.setForeground(new java.awt.Color(40, 147, 59));
     }
 
     public void setStatusText(String text) {
         lbStatus.setText(text);
-        lbStatus.setForeground(new Color(160, 160, 160));
+        if (text.equalsIgnoreCase("online")) {
+
+            lbStatus.setForeground(new java.awt.Color(40, 147, 59));
+        } else {
+            lbStatus.setForeground(new Color(160, 160, 160));
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -45,11 +50,9 @@ public class Chat_Title extends javax.swing.JPanel {
 
         lbName.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         lbName.setForeground(new java.awt.Color(255, 51, 51));
-        lbName.setText("Name");
         layer.add(lbName);
 
         lbStatus.setForeground(new java.awt.Color(40, 147, 59));
-        lbStatus.setText("Active now");
         layer.add(lbStatus);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -59,13 +62,13 @@ public class Chat_Title extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(layer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(461, Short.MAX_VALUE))
+                .addContainerGap(519, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(3, 3, 3)
-                .addComponent(layer, javax.swing.GroupLayout.PREFERRED_SIZE, 34, Short.MAX_VALUE)
+                .addComponent(layer, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                 .addGap(3, 3, 3))
         );
     }// </editor-fold>//GEN-END:initComponents
