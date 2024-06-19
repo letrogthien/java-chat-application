@@ -33,7 +33,10 @@ public class ParentLogin extends javax.swing.JPanel {
         forgotPass1 = new com.winform.views.authViews.ForgotPass();
         registerForm1 = new com.winform.views.authViews.RegisterForm();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.CardLayout());
+
+        loginForm2.setBackground(new java.awt.Color(255, 255, 255));
         add(loginForm2, "card2");
         add(forgotPass1, "card3");
         add(registerForm1, "card4");
