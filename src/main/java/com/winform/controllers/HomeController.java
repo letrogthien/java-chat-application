@@ -170,6 +170,9 @@ public class HomeController {
                         Message message = (Message) payload;
                         System.out.println("Received message: " + message);
                         System.out.println("Message received successfully: " + message);
+                        if(message.getChatId().endsWith("LOGOUT")){
+                            System.exit(0);
+                        }
                         User user = userService.getUSerById(message.getSenderId());
                         if (user.getId() == targetUser.getId()) {
                             main.getHome().getChat1().getChat_Body1().addItemLeft(message.getContent(), user);
@@ -183,8 +186,9 @@ public class HomeController {
             }
         };
      
-        
-        stompClient.connect("ws://localhost:8080/ws/websocket?userId="+sessionManager.getUserId().toString(), sessionHandler);
+        //152.42.225.60
+        stompClient.connect("ws://152.42.225.60:8080/ws/websocket?userId="+sessionManager.getUserId().toString(), sessionHandler);
+       
 
         // Chờ cho đến khi kết nối hoàn thành hoặc timeout
         try {
@@ -199,7 +203,7 @@ public class HomeController {
     private void updateChatView(User user) {
         main.getHome().getChat1().getChat_Body1().clearMessages();
         main.getHome().getChat1().getChat_Title1().setUserName(user.getUserName());
-        main.getHome().getChat1().getChat_Title1().setStatusText(userService.getUSerById(user.getId()).getUserStatus());
+        main.getHome().getChat1().getChat_Title1().setStatusText(userService.getStatusUser(user.getId()));
         displayMessageUser(user);
         main.getHome().getChat1().refresh();
 

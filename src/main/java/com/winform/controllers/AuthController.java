@@ -54,7 +54,7 @@ public class AuthController {
             main.setVisible(true);
         }
         else {
-             JOptionPane.showMessageDialog(loginRegister,
+            JOptionPane.showMessageDialog(loginRegister,
                                       "Đăng nhập không thành công. Vui lòng kiểm tra lại tên đăng nhập và mật khẩu.",
                                       "Lỗi Đăng Nhập",
                                       JOptionPane.ERROR_MESSAGE);

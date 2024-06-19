@@ -82,30 +82,7 @@ public class Main extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-         FlatRobotoFont.install();
-        FlatLaf.setPreferredFontFamily(FlatRobotoFont.FAMILY);
-        FlatLaf.setPreferredLightFontFamily(FlatRobotoFont.FAMILY_LIGHT);
-        FlatLaf.setPreferredSemiboldFontFamily(FlatRobotoFont.FAMILY_SEMIBOLD);
-        FlatIntelliJLaf.registerCustomDefaultsSource("style");
-        FlatIntelliJLaf.setup();
-        UIManager.put("PasswordField.showRevealButton", true);
-        UIManager.put("TextComponent.arc", 15);
-        UIManager.put("Button.arc", 15);
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Main().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.winform.views.homeViews.Home home;

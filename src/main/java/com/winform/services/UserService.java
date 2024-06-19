@@ -87,6 +87,30 @@ public class UserService {
 
     }
 
+    public String getStatusUser(Integer id) {
+        String sqlString = "SELECT status FROM users WHERE id=?";
+        String rt="";
+        try {
+            connectionHandler.connectDb();
+            PreparedStatement pre = connectionHandler.getConnection().prepareStatement(sqlString);
+            pre.setInt(1, id);
+            ResultSet rs = pre.executeQuery();
+
+            if (rs.next()) {
+                // Đọc dữ liệu chỉ khi có ít nhất một hàng trong kết quả
+                rt = rs.getString("status");
+                
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionHandler.closeConnection();
+        }
+        return rt;
+
+    }
+
     public List<User> findUSer(String k) {
         String sqlString = "SELECT * FROM users WHERE username LIKE ? OR fullname LIKE ? OR email LIKE ? ";
         List<User> users = new ArrayList<User>();
@@ -97,11 +121,9 @@ public class UserService {
             pre.setString(1, key);
             pre.setString(2, key);
             pre.setString(3, key);
-      
 
             ResultSet result = pre.executeQuery();
 
-     
             while (result.next()) {
                 User user = new User();
                 user.setId(result.getInt(1));
@@ -125,7 +147,5 @@ public class UserService {
         }
         return users;
     }
-    
-    
 
 }
