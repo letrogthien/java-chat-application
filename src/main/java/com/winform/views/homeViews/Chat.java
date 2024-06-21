@@ -5,7 +5,8 @@ import com.winform.event.PublicEvent;
 import java.awt.Dimension;
 import lombok.Data;
 import net.miginfocom.swing.MigLayout;
-
+import java.awt.Color;
+import javax.swing.JSeparator;
 /**
  *
  * @author agin0
@@ -24,10 +25,16 @@ public class Chat extends javax.swing.JPanel {
     }
 
     private void init() {
-        setLayout(new MigLayout("fillx", "0[fill]0", "0[]0[100%, bottom]0[shrink 0]0"));
+        setLayout(new MigLayout("fillx, insets 0", "0[fill]0", "0[fill]0[fill, grow]0[fill]0"));
 
         add(chat_Title1, "wrap");
         add(chat_Body1, "grow,wrap");
+         // Add the separator line between body and bottom
+        JSeparator separator = new JSeparator();
+        separator.setBackground(new Color(32, 205, 232));
+        separator.setForeground(new Color(32, 205, 232));
+        separator.setPreferredSize(new java.awt.Dimension(1, 2)); // Set a preferred size for better visibility
+        add(separator, "growx, hmin 2, wrap"); // Ensure the separator takes full width and is visible
         add(chat_Bottom1, "h ::50%");
 
     }

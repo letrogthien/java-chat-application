@@ -21,12 +21,12 @@ import net.miginfocom.swing.MigLayout;
 public class Chat_Bottom extends javax.swing.JPanel {
 
     private EventChat eventChat;
+    private MigLayout mig;
+    private Panel_More panelMore;
 
     public void chat1(EventChat eventChat) {
         this.eventChat = eventChat;
     }
-
-    
 
     public Chat_Bottom() {
         initComponents();
@@ -40,13 +40,25 @@ public class Chat_Bottom extends javax.swing.JPanel {
         JScrollPane scroll = new JScrollPane();
         scroll.setBorder(null);
         JIMSendTextPane txt = new JIMSendTextPane();
+        
+        // Set hint text
+        txt.setHintText("Write Message Here ...");
+
         txt.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent ke) {
                 refresh();
             }
+
+            @Override
+            public void keyPressed(KeyEvent ke) {
+                if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+                    ke.consume();  // Prevent newline character from being inserted
+                    sendMessage(txt);
+                }
+            }
         });
-        txt.setHintText("Write Message Here ...");
+
         scroll.setViewportView(txt);
         ScrollBar sb = new ScrollBar();
         sb.setBackground(new Color(229, 229, 229));
@@ -54,10 +66,12 @@ public class Chat_Bottom extends javax.swing.JPanel {
         scroll.setVerticalScrollBar(sb);
         add(sb);
         add(scroll, "w 100%");
+        
         JPanel panel = new JPanel();
         panel.setLayout(new MigLayout("filly", "0[]3[]0", "0[bottom]0"));
         panel.setPreferredSize(new Dimension(30, 28));
         panel.setBackground(Color.WHITE);
+        
         JButton cmd = new JButton();
         cmd.setBorder(null);
         cmd.setContentAreaFilled(false);
@@ -66,15 +80,7 @@ public class Chat_Bottom extends javax.swing.JPanel {
         cmd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                String text = txt.getText().trim();
-                if (!text.equals("")) {
-                    eventChat.sendMessage(text);
-                    txt.setText("");
-                    txt.grabFocus();
-                    refresh();
-                } else {
-                    txt.grabFocus();
-                }
+                sendMessage(txt);
             }
         });
         
@@ -99,6 +105,7 @@ public class Chat_Bottom extends javax.swing.JPanel {
                 }
             }
         });
+        
         panel.add(cmdMore);
         panel.add(cmd);
         add(panel, "wrap");
@@ -107,9 +114,21 @@ public class Chat_Bottom extends javax.swing.JPanel {
         add(panelMore, "dock south,h 0!");  //  set height 0
     }
 
+    private void sendMessage(JIMSendTextPane txt) {
+        String text = txt.getText().trim();
+        if (!text.equals("")) {
+            eventChat.sendMessage(text);
+            txt.setText("");
+            txt.grabFocus();
+            refresh();
+        } else {
+            txt.grabFocus();
+        }
+    }
+
     public void refresh() {
         revalidate();
-//        repaint(); // Ensures UI is repainted
+        repaint(); // Ensures UI is repainted
     }
 
     @SuppressWarnings("unchecked")
@@ -128,8 +147,7 @@ public class Chat_Bottom extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
     
-    private MigLayout mig;
-    private Panel_More panelMore;
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
