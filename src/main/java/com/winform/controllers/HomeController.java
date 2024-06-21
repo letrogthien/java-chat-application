@@ -173,7 +173,7 @@ public class HomeController {
                         if(message.getChatId().endsWith("LOGOUT")){
                             System.exit(0);
                         }
-                        User user = userService.getUSerById(message.getSenderId());
+                        User user = userService.getUserById(message.getSenderId());
                         if (user.getId() == targetUser.getId()) {
                             main.getHome().getChat1().getChat_Body1().addItemLeft(message.getContent(), user);
                         }
