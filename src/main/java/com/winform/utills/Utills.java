@@ -10,6 +10,9 @@ import javax.swing.ImageIcon;
 
         
 public class Utills {
+    public static boolean isBase64(String str) {
+    return (str.length() % 4 == 0) && str.matches("^[A-Za-z0-9+/]+={0,2}$");
+}
     public static String encodeFileToBase64Binary(File file) throws IOException {
     String encodedFile = null;
     try (FileInputStream fileInputStreamReader = new FileInputStream(file)) {

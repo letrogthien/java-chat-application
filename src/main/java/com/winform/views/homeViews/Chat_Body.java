@@ -1,14 +1,16 @@
 package com.winform.views.homeViews;
 
 
+import com.winform.models.Messagetype;
 import com.winform.models.User;
 import com.winform.swing.ScrollBar;
+import com.winform.utills.Utills;
 import java.awt.Adjustable;
 import java.awt.Color;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
-import javax.swing.Icon;
+import javax.swing.*;
 import javax.swing.JScrollBar;
 import lombok.Data;
 import net.miginfocom.swing.MigLayout;
@@ -66,16 +68,26 @@ public class Chat_Body extends javax.swing.JPanel {
         body.repaint();
         body.revalidate();
     }
-    public void addItemLeft(String text, User user) {
-        Chat_Left_With_Profile item = new Chat_Left_With_Profile();
+public void addItemLeft(String text, User user) {
+    Chat_Left_With_Profile item = new Chat_Left_With_Profile();
+    // Kiểm tra xem nội dung có phải là chuỗi Base64 không
+    if (Utills.isBase64(text)) {
+        // Nếu có, giả định text là dữ liệu hình ảnh được mã hóa Base64
+        // và chuyển đổi nó thành Icon để hiển thị
+        ImageIcon imageIcon = Utills.base64ToImageIcon(text);
+        item.setImage(new Icon[]{imageIcon}); // Thiết lập hình ảnh cho tin nhắn
+    } else {
+        // Nếu không, thiết lập text cho tin nhắn
         item.setText(text);
-        item.setTime();
-        item.setUserProfile(user.getUserName());
-        body.add(item, "wrap, w 100::80%");
-        //  ::80% set max with 80%
-        body.repaint();
-        body.revalidate();
     }
+    item.setUserProfile(user.getUserName()); // Thiết lập thông tin người dùng cho tin nhắn
+    item.setTime(); // Thiết lập thời gian cho tin nhắn
+
+    body.add(item, "wrap, w 100::80%"); // Thêm tin nhắn vào bảng chat
+    body.revalidate();
+    body.repaint();
+    scrollToBottom(); // Cuộn đến cuối cùng sau khi thêm tin nhắn mới
+}
 
     public void addItemFile(String text, String user, String fileName, String fileSize) {
         Chat_Left_With_Profile item = new Chat_Left_With_Profile();
@@ -89,10 +101,19 @@ public class Chat_Body extends javax.swing.JPanel {
         body.revalidate();
     }
 
-    public void addItemRight(String text, Icon... image) {
+    public void addItemRight(String text, Messagetype messageType, Icon...  images) {
         Chat_Right item = new Chat_Right();
-        item.setText(text);
-        item.setImage(image);
+        switch (messageType) {
+        case TEXT:
+            item.setText(text);
+            break;
+        case IMAGE:
+            // Tại đây, bạn cần chuyển đổi content từ Base64 (hoặc một định dạng tùy chỉnh khác) sang Icon
+            Icon image = Utills.base64ToImageIcon(text);
+            item.setImage(image);
+            break;
+    } 
+        item.setImage(images);
         body.add(item, "wrap, al right, w 100::80%");
         //  ::80% set max with 80%
         body.repaint();

@@ -118,20 +118,26 @@ public class HomeController {
         if (user != null) {
             EventChat eventChat = new EventChat() {
                 @Override
-                public void sendMessage(String text) {
-                    Message message = new Message();
-                    message.setSenderId(sessionManager.getUserId()); // ID của người gửi
-                    message.setRecipientId(user.getId()); // ID của người nhận
-                    message.setTimestamp(new Date(System.currentTimeMillis()));
-                    message.setContent(text);
-                    message.setMessageType(Messagetype.TEXT);
-                    message.setReadReceipt(false);
-                    message.setChatId("chat123");
-                    message.setStatus("sent");
-                    sendPrivateMessage(message);
-                    main.getHome().getChat1().getChat_Body1().addItemRight(text);
-                    addMessage(user.getId(), message);
+              public void sendMessage(String content, Messagetype messageType) {
+                Message message = new Message();
+                message.setSenderId(sessionManager.getUserId());
+                message.setRecipientId(user.getId());
+                message.setTimestamp(new Date(System.currentTimeMillis()));
+                message.setContent(content); // Đối với ảnh, `content` sẽ là chuỗi Base64
+                message.setMessageType(messageType); // TEXT hoặc IMAGE
+                message.setReadReceipt(false);
+                message.setChatId("chat123");
+                message.setStatus("sent");
+                sendPrivateMessage(message);
+                if(messageType == Messagetype.TEXT){
+                    main.getHome().getChat1().getChat_Body1().addItemRight(content ,messageType);
+                } else if(messageType == Messagetype.IMAGE){
+                    // Chuyển lại ảnh từ chuỗi Base64 và hiển thị
+                    String imageAsBase64 = content; // Đây là chuỗi Base64 của ảnh
+                   main.getHome().getChat1().getChat_Body1().addItemRight(imageAsBase64,messageType);
                 }
+                addMessage(user.getId(), message);
+            }
             };
             main.getHome().getChat1().getChat_Bottom1().chat1(eventChat);
         }
@@ -223,7 +229,7 @@ public class HomeController {
                     if (message.getSenderId() == user.getId()) {
                         main.getHome().getChat1().getChat_Body1().addItemLeft(message.getContent(), user);
                     } else {
-                        main.getHome().getChat1().getChat_Body1().addItemRight(message.getContent());
+                        main.getHome().getChat1().getChat_Body1().addItemRight(message.getContent(), message.getMessageType());
 
                     }
                 }

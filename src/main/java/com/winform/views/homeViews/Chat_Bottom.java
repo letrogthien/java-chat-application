@@ -3,8 +3,10 @@ package com.winform.views.homeViews;
 import com.winform.customComponent.Panel_More;
 import com.winform.event.EventChat;
 import com.winform.event.PublicEvent;
+import com.winform.models.Messagetype;
 import com.winform.swing.JIMSendTextPane;
 import com.winform.swing.ScrollBar;
+import com.winform.utills.Utills;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -17,7 +19,13 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import javax.swing.JFileChooser;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.Base64;
 public class Chat_Bottom extends javax.swing.JPanel {
 
     private EventChat eventChat;
@@ -83,7 +91,21 @@ public class Chat_Bottom extends javax.swing.JPanel {
                 sendMessage(txt);
             }
         });
-        
+        //
+        JButton cmdChooseFile = new JButton();
+cmdChooseFile.setBorder(null);
+cmdChooseFile.setContentAreaFilled(false);
+cmdChooseFile.setCursor(new Cursor(Cursor.HAND_CURSOR));
+cmdChooseFile.setIcon(new ImageIcon(getClass().getResource("/icon/link.png"))); // Gỉa sử bạn có icon là attach.png
+cmdChooseFile.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        chooseAndSendFile();
+    }
+});
+
+panel.add(cmdChooseFile);
+//test
         JButton cmdMore = new JButton();
         cmdMore.setBorder(null);
         cmdMore.setContentAreaFilled(false);
@@ -113,11 +135,30 @@ public class Chat_Bottom extends javax.swing.JPanel {
         panelMore.setVisible(false);
         add(panelMore, "dock south,h 0!");  //  set height 0
     }
+private void chooseAndSendFile() {
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setAcceptAllFileFilterUsed(false);
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "jpeg", "png", "gif");
+    fileChooser.addChoosableFileFilter(filter);
 
+    int option = fileChooser.showOpenDialog(this);
+    if (option == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
+        try {
+            // Chuyển đổi file sang Base64
+            String contentBase64 = Utills.encodeFileToBase64Binary(selectedFile);
+            // Gửi tin nhắn với nội dung là chuỗi Base64 và setType là IMAGE
+            eventChat.sendMessage(contentBase64, Messagetype.IMAGE);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Xử lý lỗi
+        }
+    }
+}
     private void sendMessage(JIMSendTextPane txt) {
         String text = txt.getText().trim();
         if (!text.equals("")) {
-            eventChat.sendMessage(text);
+            eventChat.sendMessage(text,Messagetype.TEXT);
             txt.setText("");
             txt.grabFocus();
             refresh();
