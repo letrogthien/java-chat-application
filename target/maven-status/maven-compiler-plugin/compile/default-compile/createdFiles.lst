@@ -1,3 +1,4 @@
+com\winform\customComponent\Notify$1.class
 com\winform\swing\JIMSendTextPane.class
 com\winform\views\authViews\RegisterForm$4.class
 com\winform\customComponent\CustomDialog.class
@@ -5,7 +6,9 @@ com\winform\emoji\Model_Emoji.class
 com\winform\views\homeViews\Chat_Item.class
 com\winform\views\authViews\ParentLogin.class
 com\winform\swing\PictureBox.class
+com\winform\customComponent\Notify.class
 com\winform\views\homeViews\Chat_Bottom$1.class
+com\winform\views\homeViews\Chat_Bottom$4.class
 com\winform\views\homeViews\View_image$2.class
 com\winform\customComponent\OptionButton.class
 com\winform\views\homeViews\Chat_Left.class
@@ -24,6 +27,7 @@ com\winform\customComponent\UserItem$1.class
 com\winform\views\homeViews\View_image.class
 com\winform\views\authViews\RegisterForm$1.class
 com\winform\views\homeViews\Chat_Bottom.class
+com\winform\views\homeViews\Chat_Body$2.class
 com\winform\views\LoginRegister.class
 com\winform\restapi\ChatClient.class
 com\winform\swing\ProgressCircleUI.class
@@ -57,6 +61,7 @@ com\winform\controllers\AuthController.class
 com\winform\swing\Progress.class
 com\winform\views\UserProfileScreen$1.class
 com\winform\swing\Progress$ProgressType.class
+com\winform\customComponent\UserItem$2.class
 com\winform\services\AuthService.class
 com\winform\SocketClient$1$1.class
 com\winform\swing\blurHash\Base83.class

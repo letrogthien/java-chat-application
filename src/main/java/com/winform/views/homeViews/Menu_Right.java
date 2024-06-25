@@ -1,5 +1,5 @@
- 
 package com.winform.views.homeViews;
+
 import com.winform.customComponent.PanelRound;
 import com.winform.customComponent.UserItem;
 import com.winform.eventListener.ChatEvent;
@@ -12,11 +12,13 @@ import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.*;
 import javax.swing.JPanel;
 import lombok.Data;
+import net.bytebuddy.asm.Advice;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -29,6 +31,7 @@ public class Menu_Right extends JPanel {
     private List<User> user;
     private ChatEvent chatEvent;
     private UserService userService;
+    
 
     public void setUserSelectionListener(ChatEvent listener) {
         this.chatEvent = listener;
@@ -61,14 +64,15 @@ public class Menu_Right extends JPanel {
         });
     }
 
-    public void setPeople(List<User> user) {
+    public List<UserItem> setPeople(List<User> user) {
+        
         this.user = user;
-        showPeople();
+        return showPeople();
     }
 
-    private void showPeople() {
+    private List<UserItem> showPeople() {
         jLayeredList.removeAll();
-
+        List<UserItem> userItems= new ArrayList<UserItem>();
         for (User user : this.user) {
             ImageIcon avatarIcon = null;
             if (user.getAvatar() != null && !user.getAvatar().trim().isEmpty()) {
@@ -76,36 +80,43 @@ public class Menu_Right extends JPanel {
             } else {
                 avatarIcon = new ImageIcon(getClass().getResource("/img/icons8-user-50.png"));
             }
+            
             UserItem userItem = new UserItem(user.getUserName(), avatarIcon);
-
+            userItems.add(userItem);
             userItem.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if (chatEvent != null) {
                         chatEvent.onUserSelected(user);
                     }
+                    
+                    
                 }
+                
             });
 
             jLayeredList.add(userItem, "wrap");
         }
         this.jLayeredList.revalidate();
         this.jLayeredList.repaint();
+        return userItems;
     }
 
-private void navigateToUserProfileScreen() {
-    // Lấy thông tin người dùng hiện tại từ UserService
-User currentUser = userService.getCurrentUser();
+    private void navigateToUserProfileScreen() {
+        // Lấy thông tin người dùng hiện tại từ UserService
+        User currentUser = userService.getCurrentUser();
 // Kiểm tra nếu không có người dùng hiện tại thì thông báo và không làm gì hơn
-if (currentUser == null) {
-JOptionPane.showMessageDialog(this, "User information not available.", "Error", JOptionPane.ERROR_MESSAGE);
-} else {
+        if (currentUser == null) {
+            JOptionPane.showMessageDialog(this, "User information not available.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
 // Khởi tạo và hiển thị UserProfileScreen dưới dạng JDialog với người dùng hiện tại
-JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this); // Tìm JFrame cha
-UserProfileScreen userProfileScreen = new UserProfileScreen(parentFrame, currentUser);
-userProfileScreen.setVisible(true); // Hiển thị JDialog
-}
-}    @SuppressWarnings("unchecked")
+            JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this); // Tìm JFrame cha
+            UserProfileScreen userProfileScreen = new UserProfileScreen(parentFrame, currentUser);
+            userProfileScreen.setVisible(true); // Hiển thị JDialog
+        }
+    }
+
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

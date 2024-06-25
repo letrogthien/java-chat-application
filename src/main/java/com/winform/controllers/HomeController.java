@@ -6,6 +6,8 @@ package com.winform.controllers;
 
 import com.google.gson.Gson;
 import com.winform.config.session.SessionManager;
+import com.winform.customComponent.Notify;
+import com.winform.customComponent.UserItem;
 import com.winform.event.EventChat;
 import com.winform.event.PublicEvent;
 import com.winform.eventListener.ChatEvent;
@@ -30,7 +32,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
@@ -64,6 +68,7 @@ public class HomeController {
     private ChatClient chatClient = new ChatClient();
     private List<LocalMessage> localMessages = new ArrayList<>();
     private User targetUser;
+    private List<UserItem> userItems;
 
     public HomeController(Main main) {
         this.targetUser = new User();
@@ -84,6 +89,7 @@ public class HomeController {
         main.getHome().getMenu_Right1().setUserSelectionListener(new ChatEvent() {
             @Override
             public void onUserSelected(User user) {
+
                 targetUser = user;
                 if (!checkStoredHaveMessage(user)) {
                     List<Message> messages = getMessageFromServer(user);
@@ -118,26 +124,26 @@ public class HomeController {
         if (user != null) {
             EventChat eventChat = new EventChat() {
                 @Override
-              public void sendMessage(String content, Messagetype messageType) {
-                Message message = new Message();
-                message.setSenderId(sessionManager.getUserId());
-                message.setRecipientId(user.getId());
-                message.setTimestamp(new Date(System.currentTimeMillis()));
-                message.setContent(content); // Đối với ảnh, `content` sẽ là chuỗi Base64
-                message.setMessageType(messageType); // TEXT hoặc IMAGE
-                message.setReadReceipt(false);
-                message.setChatId("chat123");
-                message.setStatus("sent");
-                sendPrivateMessage(message);
-                if(messageType == Messagetype.TEXT){
-                    main.getHome().getChat1().getChat_Body1().addItemRight(content ,messageType);
-                } else if(messageType == Messagetype.IMAGE){
-                    // Chuyển lại ảnh từ chuỗi Base64 và hiển thị
-                    String imageAsBase64 = content; // Đây là chuỗi Base64 của ảnh
-                   main.getHome().getChat1().getChat_Body1().addItemRight(imageAsBase64,messageType);
+                public void sendMessage(String content, Messagetype messageType) {
+                    Message message = new Message();
+                    message.setSenderId(sessionManager.getUserId());
+                    message.setRecipientId(user.getId());
+                    message.setTimestamp(new Date(System.currentTimeMillis()));
+                    message.setContent(content); // Đối với ảnh, `content` sẽ là chuỗi Base64
+                    message.setMessageType(messageType); // TEXT hoặc IMAGE
+                    message.setReadReceipt(false);
+                    message.setChatId("chat123");
+                    message.setStatus("sent");
+                    sendPrivateMessage(message);
+                    if (messageType == Messagetype.TEXT) {
+                        main.getHome().getChat1().getChat_Body1().addItemRight(content, messageType);
+                    } else if (messageType == Messagetype.IMAGE) {
+                        // Chuyển lại ảnh từ chuỗi Base64 và hiển thị
+                        String imageAsBase64 = content; // Đây là chuỗi Base64 của ảnh
+                        main.getHome().getChat1().getChat_Body1().addItemRight(imageAsBase64, messageType);
+                    }
+                    addMessage(user.getId(), message);
                 }
-                addMessage(user.getId(), message);
-            }
             };
             main.getHome().getChat1().getChat_Bottom1().chat1(eventChat);
         }
@@ -176,13 +182,27 @@ public class HomeController {
                         Message message = (Message) payload;
                         System.out.println("Received message: " + message);
                         System.out.println("Message received successfully: " + message);
-                        if(message.getChatId().endsWith("LOGOUT")){
+                        if (message.getChatId().endsWith("LOGOUT")) {
                             System.exit(0);
                         }
+
                         User user = userService.getUserById(message.getSenderId());
                         if (user.getId() == targetUser.getId()) {
                             main.getHome().getChat1().getChat_Body1().addItemLeft(message.getContent(), user);
                         }
+                        for (UserItem userItem : userItems) {
+                            if (userItem.getUserName().equalsIgnoreCase(user.getUserName())) {
+                                userItem.newMessageCome(message.getContent());
+                                userItem.revalidate();
+                                userItem.repaint();
+
+                            }
+                        }
+
+                        SwingUtilities.invokeLater(() -> {
+                            new Notify(null, user.getUserName(), message.getContent());
+                            
+                        });
                         addMessage(user.getId(), message);
 
                     }
@@ -191,10 +211,9 @@ public class HomeController {
                 System.out.println(session);
             }
         };
-     
+
         //152.42.225.60
-        stompClient.connect("ws://152.42.225.60:8080/ws/websocket?userId="+sessionManager.getUserId().toString(), sessionHandler);
-       
+        stompClient.connect("ws://152.42.225.60:8080/ws/websocket?userId=" + sessionManager.getUserId().toString(), sessionHandler);
 
         // Chờ cho đến khi kết nối hoàn thành hoặc timeout
         try {
@@ -218,7 +237,7 @@ public class HomeController {
     public void updateUserList() {
         List<User> users = userService.getListUser();
         System.out.println(users);
-        main.getHome().getMenu_Right1().setPeople(users);
+        this.userItems = main.getHome().getMenu_Right1().setPeople(users);
     }
 
     public void displayMessageUser(User user) {
@@ -241,8 +260,7 @@ public class HomeController {
         String searchString = this.main.getHome().getMenu_Right1().getJTextField1().getText();
         List<User> users = userService.findUSer(searchString);
         System.out.println(users);
-
-        this.main.getHome().getMenu_Right1().setPeople(users);
+        this.userItems = main.getHome().getMenu_Right1().setPeople(users);
 
     }
 
