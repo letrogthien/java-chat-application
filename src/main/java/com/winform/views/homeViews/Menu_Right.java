@@ -37,20 +37,20 @@ public class Menu_Right extends JPanel {
     private UserService userService;
     private Main main;
     private LoginRegister lr;
-    private AuthController authController;
+
+    private JMenuItem logOutItem;
     
 
     public void setUserSelectionListener(ChatEvent listener) {
         this.chatEvent = listener;
     }
 
-    public void setAuthController(AuthController authController) {
-        this.authController = authController;
-    }
+
     
     public Menu_Right() {
         initComponents();
         init(); // Gọi init() để khởi tạo giao diện
+        logOutItem = new JMenuItem("LogOut");
         
         jScrollPane1.setBackground(new Color(58, 72, 85));
 
@@ -120,17 +120,9 @@ public class Menu_Right extends JPanel {
             navigateToUserProfileScreen();
             System.out.println("UserInfo clicked");
         });
-
-        JMenuItem logOutItem = new JMenuItem("LogOut");
-        logOutItem.addActionListener(e -> {
-            authController.logout();
-            System.out.println("LogOut clicked");
-        });
-
         settingPopup.add(userInfoItem);
         settingPopup.add(logOutItem);
 
-        // Tính toán vị trí cần hiển thị popup, để popup hướng lên trên, chúng ta có thể dùng y - settingPopup.getPreferredSize().height
         settingPopup.show(avatarBox2, x, y - settingPopup.getPreferredSize().height);
     }
 

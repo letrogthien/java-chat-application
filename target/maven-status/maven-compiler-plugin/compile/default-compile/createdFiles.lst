@@ -81,6 +81,7 @@ com\winform\swing\ImageAvatar.class
 com\winform\models\StatusType.class
 com\winform\views\authViews\LoginForm$1.class
 com\winform\customComponent\Panel_More.class
+com\winform\swing\AvatarBorderComponent.class
 com\winform\emoji\emoji.class
 com\winform\swing\JIMSendTextPane$1.class
 com\winform\swing\ComponentResizer.class

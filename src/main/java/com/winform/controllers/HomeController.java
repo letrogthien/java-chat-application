@@ -18,6 +18,7 @@ import com.winform.models.User;
 import com.winform.restapi.ChatClient;
 import com.winform.services.UserService;
 import com.winform.utills.Utills;
+import com.winform.views.LoginRegister;
 import com.winform.views.Main;
 import com.winform.views.homeViews.Chat;
 import com.winform.views.homeViews.Chat_Body;
@@ -104,6 +105,15 @@ public class HomeController {
             }
         });
         this.main.getHome().getMenu_Right1().getJButton1().addActionListener(e -> searchAction());
+        this.main.getHome().getMenu_Right1().getLogOutItem().addActionListener(e -> {
+            sessionManager.clearSession();
+            System.out.println("LogOut clicked");
+            this.main.setVisible(false);
+            LoginRegister loginRegister = new LoginRegister();
+            Main main = new Main();
+            AuthController authController = new AuthController(loginRegister, main);
+            loginRegister.setVisible(true);
+        });
 
     }
 
@@ -127,26 +137,26 @@ public class HomeController {
         if (user != null) {
             EventChat eventChat = new EventChat() {
                 @Override
-              public void sendMessage(String content, Messagetype messageType) {
-                Message message = new Message();
-                message.setSenderId(sessionManager.getUserId());
-                message.setRecipientId(user.getId());
-                message.setTimestamp(new Date(System.currentTimeMillis()));
-                message.setContent(content); // Đối với ảnh, `content` sẽ là chuỗi Base64
-                message.setMessageType(messageType); // TEXT hoặc IMAGE
-                message.setReadReceipt(false);
-                message.setChatId("chat123");
-                message.setStatus("sent");
-                sendPrivateMessage(message);
-                if(messageType == Messagetype.TEXT){
-                    main.getHome().getChat1().getChat_Body1().addItemRight(content ,messageType, message.getTimestamp());
-                } else if(messageType == Messagetype.IMAGE){
-                    // Chuyển lại ảnh từ chuỗi Base64 và hiển thị
-                    String imageAsBase64 = content; // Đây là chuỗi Base64 của ảnh
-                   main.getHome().getChat1().getChat_Body1().addItemRight(imageAsBase64,messageType, message.getTimestamp());
+                public void sendMessage(String content, Messagetype messageType) {
+                    Message message = new Message();
+                    message.setSenderId(sessionManager.getUserId());
+                    message.setRecipientId(user.getId());
+                    message.setTimestamp(new Date(System.currentTimeMillis()));
+                    message.setContent(content); // Đối với ảnh, `content` sẽ là chuỗi Base64
+                    message.setMessageType(messageType); // TEXT hoặc IMAGE
+                    message.setReadReceipt(false);
+                    message.setChatId("chat123");
+                    message.setStatus("sent");
+                    sendPrivateMessage(message);
+                    if (messageType == Messagetype.TEXT) {
+                        main.getHome().getChat1().getChat_Body1().addItemRight(content, messageType, message.getTimestamp());
+                    } else if (messageType == Messagetype.IMAGE) {
+                        // Chuyển lại ảnh từ chuỗi Base64 và hiển thị
+                        String imageAsBase64 = content; // Đây là chuỗi Base64 của ảnh
+                        main.getHome().getChat1().getChat_Body1().addItemRight(imageAsBase64, messageType, message.getTimestamp());
+                    }
+                    addMessage(user.getId(), message);
                 }
-                addMessage(user.getId(), message);
-            }
             };
             main.getHome().getChat1().getChat_Bottom1().chat1(eventChat);
         }
@@ -185,7 +195,7 @@ public class HomeController {
                         Message message = (Message) payload;
                         System.out.println("Received message: " + message);
                         System.out.println("Message received successfully: " + message);
-                        if(message.getChatId().endsWith("LOGOUT")){
+                        if (message.getChatId().endsWith("LOGOUT")) {
                             System.exit(0);
                         }
 
@@ -204,7 +214,7 @@ public class HomeController {
 
                         SwingUtilities.invokeLater(() -> {
                             new Notify(null, user.getUserName(), message.getContent());
-                            
+
                         });
                         addMessage(user.getId(), message);
 
@@ -214,10 +224,9 @@ public class HomeController {
                 System.out.println(session);
             }
         };
-     
+
         //152.42.225.60
         stompClient.connect("ws://152.42.225.60:8080/ws/websocket?userId=" + sessionManager.getUserId().toString(), sessionHandler);
-       
 
         // Chờ cho đến khi kết nối hoàn thành hoặc timeout
         try {
@@ -246,24 +255,24 @@ public class HomeController {
 
     public void displayMessageUser(User user) {
         LocalDate lastMessageDate = null;
-        
+
         for (int i = 0; i < localMessages.size(); i++) {
             if (localMessages.get(i).getUser().equals(user)) {
                 List<Message> messages = localMessages.get(i).getMessage();
                 for (Message message : messages) {
-                    
+
                     LocalDate messageDate = message.getTimestamp().toInstant()
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDate();
-                    
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate();
+
                     // Kiểm tra xem ngày của tin nhắn có khác với ngày của tin nhắn trước đó không
                     if (lastMessageDate == null || !messageDate.equals(lastMessageDate)) {
                         // Thêm ngày vào giao diện người dùng
-                        String dateString = messageDate.toString().substring(5,10); // Hoặc sử dụng DateTimeFormatter để định dạng theo ý muốn
+                        String dateString = messageDate.toString().substring(5, 10); // Hoặc sử dụng DateTimeFormatter để định dạng theo ý muốn
                         main.getHome().getChat1().getChat_Body1().addDate(dateString);
                         lastMessageDate = messageDate;
                     }
-                    
+
                     if (message.getSenderId() == user.getId()) {
                         main.getHome().getChat1().getChat_Body1().addItemLeft(message.getContent(), user, message.getTimestamp());
                     } else {
