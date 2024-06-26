@@ -15,7 +15,6 @@ com\winform\views\homeViews\Chat_Left.class
 com\winform\controllers\HomeController$3.class
 com\winform\views\authViews\LoginForm.class
 com\winform\views\authViews\RegisterForm.class
-com\winform\views\UserProfileScreen$2.class
 com\winform\customComponent\Panel_More$2.class
 com\winform\views\homeViews\Menu_Right$2.class
 com\winform\models\Message.class
@@ -112,6 +111,5 @@ com\winform\event\EventImageView.class
 com\winform\views\homeViews\Chat_File.class
 com\winform\swing\JIMSendTextPane$WarpEditorKit.class
 com\winform\views\homeViews\Chat_Date.class
-com\winform\views\UserProfileScreen$3.class
 com\winform\customComponent\ImageAvatar.class
 com\winform\swing\ModernScrollBarUI$InvisibleScrollBarButton.class
