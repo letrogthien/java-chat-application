@@ -8,8 +8,8 @@ public class Chat_Right extends javax.swing.JLayeredPane {
 
     public Chat_Right() {
         initComponents();
-        txt.setBackground(new Color(255, 255, 255));
-        txt.setForeground(new Color(242, 242, 242));
+        txt.setBackground(new Color(77, 172, 240));
+        txt.setForeground(new Color(77, 172, 240));
         txt.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         txt.setOpaque(false);
     }

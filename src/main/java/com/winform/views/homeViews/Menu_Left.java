@@ -30,6 +30,7 @@ public class Menu_Left extends javax.swing.JPanel {
     private void initComponents() {
 
         panelRound1 = new com.winform.customComponent.PanelRound();
+        pictureBox2 = new com.winform.swing.PictureBox();
 
         setMaximumSize(new java.awt.Dimension(300, 32767));
         setMinimumSize(new java.awt.Dimension(300, 0));
@@ -39,15 +40,21 @@ public class Menu_Left extends javax.swing.JPanel {
         panelRound1.setRoundBottomLeft(25);
         panelRound1.setRoundTopLeft(25);
 
+        pictureBox2.setImage(new javax.swing.ImageIcon(getClass().getResource("/img/ofil.png"))); // NOI18N
+
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
         panelRound1Layout.setHorizontalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(panelRound1Layout.createSequentialGroup()
+                .addComponent(pictureBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 75, Short.MAX_VALUE))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 646, Short.MAX_VALUE)
+            .addGroup(panelRound1Layout.createSequentialGroup()
+                .addComponent(pictureBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 146, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -65,5 +72,6 @@ public class Menu_Left extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.winform.customComponent.PanelRound panelRound1;
+    private com.winform.swing.PictureBox pictureBox2;
     // End of variables declaration//GEN-END:variables
 }

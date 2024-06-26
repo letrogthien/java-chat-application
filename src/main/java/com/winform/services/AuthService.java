@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import lombok.Data;
 import org.mindrot.jbcrypt.BCrypt;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -51,7 +53,41 @@ public class AuthService {
     public boolean checkPassword(String password, String hashedPassword) {
         return BCrypt.checkpw(password, hashedPassword);
     }
-
+public boolean updatePassword(String username, String email, String newPassword) {
+    String sqlCheckUser = "SELECT email, username FROM users WHERE username=?";
+    
+    try {
+        connectionHandler.connectDb();
+        PreparedStatement preCheck = connectionHandler.getConnection().prepareStatement(sqlCheckUser);
+        preCheck.setString(1, username);
+        ResultSet rs = preCheck.executeQuery();
+        
+        if (!rs.next()) {
+            System.out.println("User does not exist.");
+            return false; // Người dùng không tồn tại
+        } else if (!rs.getString("email").equals(email)) {
+            System.out.println("The email does not belong to the given user.");
+            return false; // Email không phải của người dùng
+        } else {
+            // Khi người dùng tồn tại và email đúng
+            String sqlUpdatePass = "UPDATE users SET password=? WHERE username=?";
+            PreparedStatement preUpdate = connectionHandler.getConnection().prepareStatement(sqlUpdatePass);
+            preUpdate.setString(1, hashPass(newPassword));
+            preUpdate.setString(2, username);
+            int rowsUpdated = preUpdate.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Password updated successfully for user: " + username);
+                return true;
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    } finally {
+        connectionHandler.closeConnection();
+    }
+    return false;
+}
     public User getUserByUsername(String username) {
         String sqlString = "SELECT * FROM users WHERE username=?";
         User user = new User();
