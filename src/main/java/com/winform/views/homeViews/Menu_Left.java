@@ -34,7 +34,7 @@ public class Menu_Left extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(300, 32767));
         setMinimumSize(new java.awt.Dimension(300, 0));
 
-        panelRound1.setBackground(new java.awt.Color(58, 72, 85));
+        panelRound1.setBackground(new java.awt.Color(255, 255, 255));
         panelRound1.setMinimumSize(new java.awt.Dimension(300, 100));
         panelRound1.setRoundBottomLeft(25);
         panelRound1.setRoundTopLeft(25);

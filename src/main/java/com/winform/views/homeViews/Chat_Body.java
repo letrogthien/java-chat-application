@@ -180,7 +180,7 @@ public class Chat_Body extends javax.swing.JPanel {
         sp.setBorder(null);
         sp.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        body.setBackground(new java.awt.Color(153, 255, 255));
+        body.setBackground(new java.awt.Color(255, 255, 255));
         body.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout bodyLayout = new javax.swing.GroupLayout(body);

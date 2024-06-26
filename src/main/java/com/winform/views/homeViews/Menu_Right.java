@@ -177,7 +177,7 @@ public class Menu_Right extends JPanel {
         setMaximumSize(new java.awt.Dimension(200, 32767));
         setMinimumSize(new java.awt.Dimension(200, 0));
 
-        panelRound2.setBackground(new java.awt.Color(58, 72, 85));
+        panelRound2.setBackground(new java.awt.Color(255, 255, 255));
         panelRound2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         panelRound2.setForeground(new java.awt.Color(255, 255, 255));
         panelRound2.setRoundBottomRight(25);
