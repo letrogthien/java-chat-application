@@ -4,6 +4,7 @@
  */
 package com.winform.controllers;
 
+import com.winform.config.session.SessionManager;
 import com.winform.models.User;
 import com.winform.services.AuthService;
 import com.winform.views.LoginRegister;
@@ -60,54 +61,65 @@ public class AuthController {
                                       JOptionPane.ERROR_MESSAGE);
         }
     }
-private void register(){
-    // Lấy thông tin người dùng từ form đăng ký
-    String username = loginRegister.getParentLogin1().getRegisterForm1().getJTextField1().getText();
-    String email = loginRegister.getParentLogin1().getRegisterForm1().getJTextField2().getText();
-    String phone = loginRegister.getParentLogin1().getRegisterForm1().getJTextField3().getText();
-    char[] password = loginRegister.getParentLogin1().getRegisterForm1().getJPasswordField1().getPassword();
-    char[] confirmPassword = loginRegister.getParentLogin1().getRegisterForm1().getJPasswordField2().getPassword();
+    private void register(){
+        // Lấy thông tin người dùng từ form đăng ký
+        String username = loginRegister.getParentLogin1().getRegisterForm1().getJTextField1().getText();
+        String email = loginRegister.getParentLogin1().getRegisterForm1().getJTextField2().getText();
+        String phone = loginRegister.getParentLogin1().getRegisterForm1().getJTextField3().getText();
+        char[] password = loginRegister.getParentLogin1().getRegisterForm1().getJPasswordField1().getPassword();
+        char[] confirmPassword = loginRegister.getParentLogin1().getRegisterForm1().getJPasswordField2().getPassword();
 
-    // Kiểm tra các trường dữ liệu không được phép trống
-    if(username.isEmpty() || email.isEmpty() || phone.isEmpty() || password.length == 0 || confirmPassword.length == 0) {
-        JOptionPane.showMessageDialog(loginRegister,
-                                      "Vui lòng nhập đầy đủ thông tin.",
-                                      "Thông Báo",
-                                      JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+        // Kiểm tra các trường dữ liệu không được phép trống
+        if(username.isEmpty() || email.isEmpty() || phone.isEmpty() || password.length == 0 || confirmPassword.length == 0) {
+            JOptionPane.showMessageDialog(loginRegister,
+                                          "Vui lòng nhập đầy đủ thông tin.",
+                                          "Thông Báo",
+                                          JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-    // Kiểm tra mật khẩu và mật khẩu xác nhận có khớp nhau không
-    if (!Arrays.equals(password, confirmPassword)) {
-        JOptionPane.showMessageDialog(loginRegister,
-                                      "Mật khẩu nhập lại không khớp.",
-                                      "Lỗi Đăng Ký",
-                                      JOptionPane.ERROR_MESSAGE);
-        return;
+        // Kiểm tra mật khẩu và mật khẩu xác nhận có khớp nhau không
+        if (!Arrays.equals(password, confirmPassword)) {
+            JOptionPane.showMessageDialog(loginRegister,
+                                          "Mật khẩu nhập lại không khớp.",
+                                          "Lỗi Đăng Ký",
+                                          JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Tạo đối tượng User
+        User newUser = new User();
+        newUser.setUserName(username);
+        newUser.setEmail(email);
+        newUser.setPhone(phone);
+        newUser.setPassword(new String(password));  // Chuyển mảng char thành String
+
+        // Đăng ký người dùng mới
+        if (authService.register(newUser)) {  // Sử dụng đối tượng User đã tạo
+            JOptionPane.showMessageDialog(loginRegister,
+                                          "Đăng ký thành công!",
+                                          "Thông Báo",
+                                          JOptionPane.INFORMATION_MESSAGE);
+            // Chuyển người dùng về màn hình đăng nhập sau khi đăng ký thành công
+            showCard("card2");
+        } else {
+            JOptionPane.showMessageDialog(loginRegister,
+                                          "Đăng ký không thành công. Có thể tên đăng nhập hoặc email đã tồn tại.",
+                                          "Lỗi Đăng Ký",
+                                          JOptionPane.ERROR_MESSAGE);
+        }
     }
     
-    // Tạo đối tượng User
-    User newUser = new User();
-    newUser.setUserName(username);
-    newUser.setEmail(email);
-    newUser.setPhone(phone);
-    newUser.setPassword(new String(password));  // Chuyển mảng char thành String
-
-    // Đăng ký người dùng mới
-    if (authService.register(newUser)) {  // Sử dụng đối tượng User đã tạo
-        JOptionPane.showMessageDialog(loginRegister,
-                                      "Đăng ký thành công!",
-                                      "Thông Báo",
-                                      JOptionPane.INFORMATION_MESSAGE);
-        // Chuyển người dùng về màn hình đăng nhập sau khi đăng ký thành công
-        showCard("card2");
-    } else {
-        JOptionPane.showMessageDialog(loginRegister,
-                                      "Đăng ký không thành công. Có thể tên đăng nhập hoặc email đã tồn tại.",
-                                      "Lỗi Đăng Ký",
-                                      JOptionPane.ERROR_MESSAGE);
+    public void logout() {
+        SessionManager session = SessionManager.getInstance(null);
+        if (session != null) {
+            session.clearSession(); // Xóa session hiện tại
+        }
+        main.setVisible(false);
+        loginRegister.setVisible(true);
     }
-}
+    
+    
 
     private void addButtonActionToCard(JButton button, String cardName) {
         button.addActionListener(e -> {

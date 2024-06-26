@@ -2,6 +2,7 @@
 package com.winform.views;
 import com.winform.models.User;
 import com.winform.services.UserService;
+import com.winform.swing.AvatarBorderComponent;
 import com.winform.swing.AvatarBox;
 import com.winform.views.homeViews.Home;
 import com.winform.views.homeViews.Menu_Right;
@@ -12,6 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import javax.swing.border.Border;
 public class UserProfileScreen extends JDialog {
 
     private User user;
@@ -29,46 +31,33 @@ public class UserProfileScreen extends JDialog {
         setUpGUI();
 
         // Cài đặt kích thước và vị trí của JDialog
-        setSize(500, 500);
+        setSize(350, 450); 
         setLocationRelativeTo(parent);
+        setResizable(false);
     }
 
     private void setUpGUI() {
         // Set layout for the main panel
         this.setLayout(new BorderLayout());
 
-        // Background Image
-        JLabel background = new JLabel(new ImageIcon(getClass().getResource("/img/backround.jpg"))) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                ImageIcon icon = (ImageIcon) this.getIcon();
-                if (icon != null) {
-                    Image image = icon.getImage();
-                    g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-                }
-            }
-        };
-
-        background.setLayout(new BorderLayout());
-        this.add(background, BorderLayout.CENTER);
-
-        // Card Panel with rounded corners
-        JPanel cardPanel = new JPanel();
-        cardPanel.setLayout(new BorderLayout());
-        cardPanel.setBackground(new Color(255, 255, 255, 200)); // Set background color to white with some transparency
-        cardPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 8, true));
-        cardPanel.setPreferredSize(new Dimension(400, 300)); // Fixed size for the card panel
+        // Card Panel with semi-transparent background and rounded corners
+        JPanel cardPanel = new JPanel(new BorderLayout(5, 5));
+        cardPanel.setBackground(new Color(255, 255, 255)); 
 
         // User Info Panel
-        userInfoPanel = new JPanel(new GridLayout(0, 2, 10, 10));
-        userInfoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        userInfoPanel = new JPanel(new GridBagLayout());
         userInfoPanel.setOpaque(false);
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(3, 0, 0, 0);
 
         AvatarBox avatarBox = new AvatarBox();
         avatarBox.setPreferredSize(new Dimension(150, 150)); // Adjust the size as needed
         avatarBox.setMinimumSize(new Dimension(150, 150)); // Adjust the size as needed
         avatarBox.setMaximumSize(new Dimension(150, 150)); // Adjust the size as needed
+        
+        
 
         UserService userService = new UserService();
         String avatarBase64 = userService.getAvatarByUsername(user.getUserName());
@@ -80,6 +69,7 @@ public class UserProfileScreen extends JDialog {
         }
 
         avatarBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setAcceptAllFileFilterUsed(false);
@@ -102,90 +92,116 @@ public class UserProfileScreen extends JDialog {
                 }
             }
         });
+        
+        AvatarBorderComponent avatarBorderComponent = new AvatarBorderComponent(avatarBox);
 
-        userInfoPanel.add(avatarBox);
-        userInfoPanel.add(new JLabel(" "));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 2;
+        gbc.anchor = GridBagConstraints.WEST;
+        userInfoPanel.add(avatarBorderComponent, gbc);
+
+        
+        gbc.gridx  = 2;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 2;
+        gbc.anchor = GridBagConstraints.LINE_START;
 
         // Add user info fields
-        lblUsername = new JLabel("Username: " + user.getUserName());
+        lblUsername = new JLabel(user.getUserName());
+        lblUsername.setFont(new Font("Serif", Font.BOLD, 24));
+        gbc.insets = new Insets(10, 10, 0, 0); 
+        userInfoPanel.add(lblUsername, gbc);
+        
+        
         lblFullName = new JLabel("Full Name: ");
+        gbc.gridx  = 0;
+        gbc.gridy = 2;
+        userInfoPanel.add(lblFullName, gbc);
         txtFullName = new JTextField(user.getFullName());
+        gbc.gridx = 2;
+        userInfoPanel.add(txtFullName, gbc);
 
         lblEmail = new JLabel("Email: ");
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        userInfoPanel.add(lblEmail, gbc);
         txtEmail = new JTextField(user.getEmail());
+        gbc.gridx = 2;
+        userInfoPanel.add(txtEmail, gbc);
 
         lblPhone = new JLabel("Phone: ");
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        userInfoPanel.add(lblPhone, gbc);
         txtPhone = new JTextField(user.getPhone());
+        gbc.gridx = 2;
+        userInfoPanel.add(txtPhone, gbc);
 
         lblNickName = new JLabel("Nick Name: ");
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        userInfoPanel.add(lblNickName, gbc);
         txtNickName = new JTextField(user.getNickName());
+        gbc.gridx = 2;
+        userInfoPanel.add(txtNickName, gbc);
 
-        userInfoPanel.add(lblUsername);
-        userInfoPanel.add(new JLabel()); // Empty label for alignment
-        userInfoPanel.add(lblFullName);
-        userInfoPanel.add(txtFullName);
-        userInfoPanel.add(lblEmail);
-        userInfoPanel.add(txtEmail);
-        userInfoPanel.add(lblPhone);
-        userInfoPanel.add(txtPhone);
-        userInfoPanel.add(lblNickName);
-        userInfoPanel.add(txtNickName);
-        userInfoPanel.add(new JLabel("Password: "));
+        gbc.gridx = 0;
+        gbc.gridy = 10;
+        userInfoPanel.add(new JLabel("Password: "), gbc);
         txtPassword = new JPasswordField();
         txtPassword.setEchoChar('*');
-        userInfoPanel.add(txtPassword);
+        gbc.gridx = 2;
+        userInfoPanel.add(txtPassword, gbc);
 
         // Add a separate panel for update section
-        updatePanel = new JPanel();
-        updatePanel.setOpaque(false);
+        updatePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        updatePanel.setOpaque(false); // Transparent to show the cardPanel color
         btnUpdate = new JButton("Update Information");
+        Color customColor = new Color(0, 102, 102); // Tạo một màu mới từ giá trị RGB
+        btnUpdate.setBackground(customColor); // Đặt màu nền cho nút bằng màu tạo từ giá trị RGB
+        btnUpdate.setForeground(Color.WHITE);
         updatePanel.add(btnUpdate);
 
         cardPanel.add(userInfoPanel, BorderLayout.CENTER);
         cardPanel.add(updatePanel, BorderLayout.SOUTH);
 
+
         // Panel container to center the card panel and the back button
         JPanel centerPanel = new JPanel(new BorderLayout());
         centerPanel.setOpaque(false);
+        
+        // Adding cardPanel to main dialog window
+        this.add(cardPanel, BorderLayout.CENTER);
 
-        // Back Button at the top left corner of the main panel
-        btnBack = new JButton("Back");
-        JPanel backPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        backPanel.setOpaque(false);
-        backPanel.add(btnBack);
-
-        centerPanel.add(backPanel, BorderLayout.NORTH);
-
-        // Use another JPanel to center the card panel within the available space
-        JPanel cardWrapperPanel = new JPanel(new GridBagLayout());
-        cardWrapperPanel.setOpaque(false);
-        cardWrapperPanel.add(cardPanel);
-
-        centerPanel.add(cardWrapperPanel, BorderLayout.CENTER);
-        background.add(centerPanel, BorderLayout.CENTER);
-
-        // Event for Back button
-        btnBack.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose(); // Đóng JDialog
-            }
-        });
 
         // Event for Update button
+       // Event for Update button
         btnUpdate.addActionListener((ActionEvent e) -> {
-            user.setFullName(txtFullName.getText());
-            user.setEmail(txtEmail.getText());
-            user.setPhone(txtPhone.getText());
-            user.setNickName(txtNickName.getText());
-            user.setPassword(new String(txtPassword.getPassword()));
+            String fullName = txtFullName.getText().trim();
+            String email = txtEmail.getText().trim();
+            String phone = txtPhone.getText().trim();
+            String nickName = txtNickName.getText().trim();
+            String password = new String(txtPassword.getPassword()).trim();
 
-            boolean success = userService.updateUser(user.getUserName(), user);
-            if (success) {
-                JOptionPane.showMessageDialog(null, "Cập Nhật Thông Tin Người Dùng Thành Công.");
-                dispose();
+            // Kiểm tra nếu bất kỳ trường nào được bỏ trống
+            if (fullName.isEmpty() || email.isEmpty() || phone.isEmpty() || nickName.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin.", "Thông Báo", JOptionPane.WARNING_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "Failed to update user information", "Error", JOptionPane.ERROR_MESSAGE);
+                user.setFullName(fullName);
+                user.setEmail(email);
+                user.setPhone(phone);
+                user.setNickName(nickName);
+                user.setPassword(password);
+
+                boolean success = userService.updateUser(user.getUserName(), user);
+                if (success) {
+                    JOptionPane.showMessageDialog(null, "Cập Nhật Thông Tin Người Dùng Thành Công.");
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cập nhật thông tin người dùng thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }

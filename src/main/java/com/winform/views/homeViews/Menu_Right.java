@@ -1,14 +1,18 @@
 package com.winform.views.homeViews;
-
+import com.winform.config.session.SessionManager;
+import com.winform.controllers.AuthController;
+import com.winform.controllers.HomeController;
 import com.winform.customComponent.PanelRound;
 import com.winform.customComponent.UserItem;
 import com.winform.eventListener.ChatEvent;
 import com.winform.models.User;
 import com.winform.services.UserService;
 import com.winform.utills.Utills;
+import com.winform.views.LoginRegister;
 import com.winform.views.Main;
 import com.winform.views.UserProfileScreen;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -31,18 +35,24 @@ public class Menu_Right extends JPanel {
     private List<User> user;
     private ChatEvent chatEvent;
     private UserService userService;
+    private Main main;
+    private LoginRegister lr;
+    private AuthController authController;
     
 
     public void setUserSelectionListener(ChatEvent listener) {
         this.chatEvent = listener;
     }
 
-    /**
-     * Creates new form Menu_Right
-     */
+    public void setAuthController(AuthController authController) {
+        this.authController = authController;
+    }
+    
     public Menu_Right() {
         initComponents();
         init(); // Gọi init() để khởi tạo giao diện
+        
+        jScrollPane1.setBackground(new Color(58, 72, 85));
 
         // Sau đó, thiết lập hình ảnh cho avatarBox1
         ImageIcon settingIcon = new ImageIcon(getClass().getResource("/img/setting_ic.png")); // Đảm bảo đường dẫn đúng với vị trí của file ảnh trong dự án của bạn
@@ -59,7 +69,7 @@ public class Menu_Right extends JPanel {
         avatarBox2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                navigateToUserProfileScreen();
+                showSettingPopup(e.getX(), e.getY());
             }
         });
     }
@@ -100,6 +110,28 @@ public class Menu_Right extends JPanel {
         this.jLayeredList.revalidate();
         this.jLayeredList.repaint();
         return userItems;
+    }
+
+    private void showSettingPopup(int x, int y) {
+        JPopupMenu settingPopup = new JPopupMenu();
+
+        JMenuItem userInfoItem = new JMenuItem("Update Profile");
+        userInfoItem.addActionListener(e -> {
+            navigateToUserProfileScreen();
+            System.out.println("UserInfo clicked");
+        });
+
+        JMenuItem logOutItem = new JMenuItem("LogOut");
+        logOutItem.addActionListener(e -> {
+            authController.logout();
+            System.out.println("LogOut clicked");
+        });
+
+        settingPopup.add(userInfoItem);
+        settingPopup.add(logOutItem);
+
+        // Tính toán vị trí cần hiển thị popup, để popup hướng lên trên, chúng ta có thể dùng y - settingPopup.getPreferredSize().height
+        settingPopup.show(avatarBox2, x, y - settingPopup.getPreferredSize().height);
     }
 
     private void navigateToUserProfileScreen() {
@@ -145,18 +177,18 @@ public class Menu_Right extends JPanel {
         setMaximumSize(new java.awt.Dimension(200, 32767));
         setMinimumSize(new java.awt.Dimension(200, 0));
 
-        panelRound2.setBackground(new java.awt.Color(255, 255, 255));
+        panelRound2.setBackground(new java.awt.Color(58, 72, 85));
         panelRound2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         panelRound2.setForeground(new java.awt.Color(255, 255, 255));
         panelRound2.setRoundBottomRight(25);
         panelRound2.setRoundTopRight(25);
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBackground(new java.awt.Color(153, 0, 153));
         jScrollPane1.setBorder(null);
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setHorizontalScrollBar(null);
 
-        jLayeredList.setBackground(new java.awt.Color(255, 255, 255));
+        jLayeredList.setBackground(new java.awt.Color(255, 153, 153));
         jLayeredList.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jLayeredList.setForeground(new java.awt.Color(255, 255, 255));
 
@@ -187,7 +219,7 @@ public class Menu_Right extends JPanel {
             }
         });
 
-        jButton1.setText("...");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-search-25.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -199,18 +231,18 @@ public class Menu_Right extends JPanel {
         panelRound1Layout.setHorizontalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -233,7 +265,7 @@ public class Menu_Right extends JPanel {
                 .addContainerGap()
                 .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(avatarBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())

@@ -24,6 +24,7 @@ public class LoginRegister extends javax.swing.JFrame {
      */
     public LoginRegister() {
         initComponents();
+        setResizable(false);
     }
 
     /**

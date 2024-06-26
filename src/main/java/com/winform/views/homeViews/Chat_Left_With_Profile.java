@@ -1,13 +1,18 @@
 package com.winform.views.homeViews;
 
 import java.awt.Color;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
+import javax.swing.border.EmptyBorder;
 
 public class Chat_Left_With_Profile extends javax.swing.JLayeredPane {
 
     public Chat_Left_With_Profile() {
         initComponents();
-        txt.setBackground(new Color(242, 242, 242));
+        txt.setBackground(new Color(255, 153, 102, 240));
+        txt.setForeground(new Color(242, 242, 242));
+        txt.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        txt.setOpaque(false);
     }
 
     public void setUserProfile(String user) {
@@ -40,8 +45,8 @@ public class Chat_Left_With_Profile extends javax.swing.JLayeredPane {
     }
 
 
-    public void setTime() {
-        txt.setTime("10:30 PM");    //  Testing
+    public void setTime(String time) {
+        txt.setTime(time.substring(11, 16));    //  Testing
     }
 
 
@@ -52,6 +57,9 @@ public class Chat_Left_With_Profile extends javax.swing.JLayeredPane {
         imageAvatar1 = new com.winform.swing.ImageAvatar();
         txt = new com.winform.views.homeViews.Chat_Item();
         IaImage = new com.winform.swing.ImageAvatar();
+
+        txt.setForeground(java.awt.Color.white);
+        txt.setFont(new java.awt.Font("Arial Unicode MS", 0, 10)); // NOI18N
 
         IaImage.setBorderSize(0);
         IaImage.setImage(new javax.swing.ImageIcon(getClass().getResource("/icon/testing/dog.jpg"))); // NOI18N

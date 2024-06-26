@@ -4,6 +4,10 @@
  */
 package com.winform.views.homeViews;
 
+import static com.winform.App.main;
+import com.winform.controllers.AuthController;
+import com.winform.views.LoginRegister;
+import com.winform.views.Main;
 import javax.swing.JLayeredPane;
 import lombok.Data;
 import net.miginfocom.swing.MigLayout;
@@ -15,15 +19,15 @@ import net.miginfocom.swing.MigLayout;
 @Data
 public class Home extends JLayeredPane {
 
-    /**
-     * Creates new form Home
-     */
+
+    
     public Home() {
         initComponents();
         init();
     }
 
     public void init() {
+        
         setLayout(new MigLayout("fillx, filly", "0[200!]5[fill, 100%]5[200!]0", "0[fill]0"));
         
     }

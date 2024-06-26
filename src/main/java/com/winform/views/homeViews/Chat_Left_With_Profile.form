@@ -40,6 +40,14 @@
   </Layout>
   <SubComponents>
     <Component class="com.winform.views.homeViews.Chat_Item" name="txt">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
+        </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Arial Unicode MS" size="10" style="0"/>
+        </Property>
+      </Properties>
     </Component>
     <Container class="com.winform.swing.ImageAvatar" name="IaImage">
       <Properties>

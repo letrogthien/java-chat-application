@@ -1,13 +1,17 @@
 package com.winform.views.homeViews;
 
 import java.awt.Color;
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 
 public class Chat_Right extends javax.swing.JLayeredPane {
 
     public Chat_Right() {
         initComponents();
-        txt.setBackground(new Color(179, 233, 255));
+        txt.setBackground(new Color(255, 255, 255, 100));
+        txt.setForeground(new Color(242, 242, 242));
+        txt.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        txt.setOpaque(false);
     }
 
     public void setText(String text) {
@@ -23,8 +27,8 @@ public class Chat_Right extends javax.swing.JLayeredPane {
         txt.setImage(true, image);
     }
 
-    public void setTime() {
-        txt.setTime("10:30 PM");    //  Testing
+    public void setTime(String time) {
+        txt.setTime(time.substring(11, 16));    //  Testing
     }
     
     public void setImage(String... image) {

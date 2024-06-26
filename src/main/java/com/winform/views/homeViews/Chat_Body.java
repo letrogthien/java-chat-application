@@ -7,8 +7,11 @@ import com.winform.swing.ScrollBar;
 import com.winform.utills.Utills;
 import java.awt.Adjustable;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.JScrollBar;
@@ -35,9 +38,11 @@ public class Chat_Body extends javax.swing.JPanel {
     public Chat_Body() {
         initComponents();
         init();
-       
-
     }
+    
+    
+    
+    
 
     private void init() {
         body.setLayout(new MigLayout("fillx", "", "5[]5"));
@@ -45,55 +50,76 @@ public class Chat_Body extends javax.swing.JPanel {
         sp.getVerticalScrollBar().setBackground(Color.WHITE);
     }
 
-    public void addItemLeft(String text, String user, Icon... image) {
+    public void addItemLeft(String text, User user,Date time, Icon... image) {
         Chat_Left_With_Profile item = new Chat_Left_With_Profile();
+        ImageIcon avatarIcon = null;
+            if (user.getAvatar() != null && !user.getAvatar().trim().isEmpty()) {
+                avatarIcon = Utills.base64ToImageIcon(user.getAvatar());
+            } else {
+                avatarIcon = new ImageIcon(getClass().getResource("/img/icons8-user-50.png"));
+            }
+        item.setImageProfile(avatarIcon);
         item.setText(text);
         item.setImage(image);
-        item.setTime();
-        item.setUserProfile(user);
-        body.add(item, "wrap, w 100::80%");
-        //  ::80% set max with 80%
-        body.repaint();
-        body.revalidate();
-    }
-
-    public void addItemLeft(String text, User user, String[] image) {
-        Chat_Left_With_Profile item = new Chat_Left_With_Profile();
-        item.setText(text);
-        item.setImage(image);
-        item.setTime();
+        item.setTime(time.toString());
         item.setUserProfile(user.getUserName());
         body.add(item, "wrap, w 100::80%");
         //  ::80% set max with 80%
         body.repaint();
         body.revalidate();
     }
-public void addItemLeft(String text, User user) {
-    Chat_Left_With_Profile item = new Chat_Left_With_Profile();
-    // Kiểm tra xem nội dung có phải là chuỗi Base64 không
-    if (Utills.isBase64(text)) {
-        // Nếu có, giả định text là dữ liệu hình ảnh được mã hóa Base64
-        // và chuyển đổi nó thành Icon để hiển thị
-        ImageIcon imageIcon = Utills.base64ToImageIcon(text);
-        item.setImage(new Icon[]{imageIcon}); // Thiết lập hình ảnh cho tin nhắn
-    } else {
-        // Nếu không, thiết lập text cho tin nhắn
+
+    public void addItemLeft(String text, User user, String[] image,Date time) {
+        Chat_Left_With_Profile item = new Chat_Left_With_Profile();
+        ImageIcon avatarIcon = null;
+            if (user.getAvatar() != null && !user.getAvatar().trim().isEmpty()) {
+                avatarIcon = Utills.base64ToImageIcon(user.getAvatar());
+            } else {
+                avatarIcon = new ImageIcon(getClass().getResource("/img/icons8-user-50.png"));
+            }
+        item.setImageProfile(avatarIcon);
         item.setText(text);
+        item.setImage(image);
+        item.setTime(time.toString());
+        item.setUserProfile(user.getUserName());
+        body.add(item, "wrap, w 100::80%");
+        //  ::80% set max with 80%
+        body.repaint();
+        body.revalidate();
     }
-    item.setUserProfile(user.getUserName()); // Thiết lập thông tin người dùng cho tin nhắn
-    item.setTime(); // Thiết lập thời gian cho tin nhắn
+    public void addItemLeft(String text, User user, Date time) {
+        Chat_Left_With_Profile item = new Chat_Left_With_Profile();
+        // Kiểm tra xem nội dung có phải là chuỗi Base64 không
+        if (Utills.isBase64(text)) {
+            // Nếu có, giả định text là dữ liệu hình ảnh được mã hóa Base64
+            // và chuyển đổi nó thành Icon để hiển thị
+            ImageIcon imageIcon = Utills.base64ToImageIcon(text);
+            item.setImage(new Icon[]{imageIcon}); // Thiết lập hình ảnh cho tin nhắn
+        } else {
+            // Nếu không, thiết lập text cho tin nhắn
+            item.setText(text);
+        }
+        ImageIcon avatarIcon = null;
+            if (user.getAvatar() != null && !user.getAvatar().trim().isEmpty()) {
+                avatarIcon = Utills.base64ToImageIcon(user.getAvatar());
+            } else {
+                avatarIcon = new ImageIcon(getClass().getResource("/img/icons8-user-50.png"));
+            }
+        item.setImageProfile(avatarIcon);
+        item.setUserProfile(user.getUserName()); // Thiết lập thông tin người dùng cho tin nhắn
+        item.setTime(time.toString()); // Thiết lập thời gian cho tin nhắn
 
-    body.add(item, "wrap, w 100::80%"); // Thêm tin nhắn vào bảng chat
-    body.revalidate();
-    body.repaint();
-    scrollToBottom(); // Cuộn đến cuối cùng sau khi thêm tin nhắn mới
-}
+        body.add(item, "wrap, w 100::80%"); // Thêm tin nhắn vào bảng chat
+        body.revalidate();
+        body.repaint();
+        scrollToBottom(); // Cuộn đến cuối cùng sau khi thêm tin nhắn mới
+    }
 
-    public void addItemFile(String text, String user, String fileName, String fileSize) {
+    public void addItemFile(String text, String user, String fileName, String fileSize,Date time) {
         Chat_Left_With_Profile item = new Chat_Left_With_Profile();
         item.setText(text);
         item.setFile(fileName, fileSize);
-        item.setTime();
+        item.setTime(time.toString());
         item.setUserProfile(user);
         body.add(item, "wrap, w 100::80%");
         //  ::80% set max with 80%
@@ -101,7 +127,7 @@ public void addItemLeft(String text, User user) {
         body.revalidate();
     }
 
-    public void addItemRight(String text, Messagetype messageType, Icon...  images) {
+    public void addItemRight(String text, Messagetype messageType,Date time, Icon...  images) {
         Chat_Right item = new Chat_Right();
         switch (messageType) {
         case TEXT:
@@ -118,14 +144,15 @@ public void addItemLeft(String text, User user) {
         //  ::80% set max with 80%
         body.repaint();
         body.revalidate();
-        item.setTime();
+        item.setTime(time.toString());
         scrollToBottom();
     }
 
-    public void addItemFileRight(String text, String fileName, String fileSize) {
+    public void addItemFileRight(String text, String fileName, String fileSize, Date time  ) {
         Chat_Right item = new Chat_Right();
         item.setText(text);
         item.setFile(fileName, fileSize);
+        item.setTime(time.toString());
         body.add(item, "wrap, al right, w 100::80%");
         //  ::80% set max with 80%
         body.repaint();
@@ -140,6 +167,7 @@ public void addItemLeft(String text, User user) {
         body.revalidate();
     }
 
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -152,7 +180,8 @@ public void addItemLeft(String text, User user) {
         sp.setBorder(null);
         sp.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        body.setBackground(new java.awt.Color(255, 255, 255));
+        body.setBackground(new java.awt.Color(28, 38, 50));
+        body.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout bodyLayout = new javax.swing.GroupLayout(body);
         body.setLayout(bodyLayout);
@@ -181,7 +210,7 @@ public void addItemLeft(String text, User user) {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(line1, javax.swing.GroupLayout.DEFAULT_SIZE, 12, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -195,8 +224,9 @@ public void addItemLeft(String text, User user) {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(sp, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(sp, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
     private void scrollToBottom() {
